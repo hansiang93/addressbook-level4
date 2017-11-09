@@ -24,8 +24,6 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private ReadOnlyPerson selectedPerson;
-
     @FXML
     private ButtonBar buttonBar;
 
@@ -56,7 +54,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        selectedPerson = event.getNewSelection().person;
+        ReadOnlyPerson selectedPerson = event.getNewSelection().person;
         ArrayList<Button> buttonList = new ArrayList<>();
         selectedPerson.getWebLinks().forEach(webLink -> {
             Button newbutton = new Button(webLink.webLinkTag);
