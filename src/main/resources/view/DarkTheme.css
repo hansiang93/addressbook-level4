@@ -16,7 +16,7 @@
 /*@@author*/
 .background {
     -fx-background-color: derive(-fx-base-background-color-0, 20%);
-    background-color: -fx-base-background-color-1; /* Used in the default.html file */
+    background-color: #2e3138; /* Used in the default.html file */
 }
 
 .label {
