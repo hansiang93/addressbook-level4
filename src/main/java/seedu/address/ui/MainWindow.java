@@ -241,6 +241,16 @@ public class MainWindow extends UiPart<Region> {
 
     //@@author
     /**
+     * Displays the user profile to the user
+     */
+    @FXML
+    private void handleInstaLogin() {
+        logger.info("Opening Insta Login Window");
+        WebAuthBrowser instaLoginWindow = new WebAuthBrowser();
+        instaLoginWindow.show();
+    }
+
+    /**
      * Closes the application.
      */
     @FXML

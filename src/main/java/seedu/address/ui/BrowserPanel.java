@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
@@ -17,6 +18,7 @@ import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author hansiang93
+
 /**
  * The Browser Panel of the App.
  */
@@ -31,6 +33,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private boolean isWebViewLoaded = false;
     private ReadOnlyPerson selectedPerson;
 
     @FXML
@@ -63,11 +66,11 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadPersonPersonal(ReadOnlyPerson selectedPerson) {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (webLink.toStringWebLinkTag().equals("others")) {
+                logger.info("Loading Personal Page of " + selectedPerson.getName());
                 loadPage(webLink.toStringWebLink());
                 return;
             }
         });
-        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -76,15 +79,26 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadPersonSocial(ReadOnlyPerson selectedPerson, String websiteRequested) {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
+                logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
                 loadPage(webLink.toStringWebLink());
                 return;
             }
         });
-        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    private void isPageloaded(String url) {
+        Platform.runLater(() -> browser.getEngine().getLoadWorker().stateProperty()
+                .addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.RUNNING) {
+                isWebViewLoaded = false;
+            } else if (newState == Worker.State.SUCCEEDED) {
+                isWebViewLoaded = true;
+            }
+        }));
     }
 
     /**
