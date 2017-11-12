@@ -65,6 +65,9 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
 
+    /**
+     * Loads the selected Person's Google search by name page.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
@@ -72,6 +75,9 @@ public class BrowserPanel extends UiPart<Region> {
         raise(new NewResultAvailableEvent("Loading Google search of " + person.getName()));
     }
 
+    /**
+     * Loads the selected Person's address search via Google Maps search.
+     */
     private void loadPersonAddress(ReadOnlyPerson person) {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
         raise(new NewResultAvailableEvent("Loading Address search of " + person.getName()));
