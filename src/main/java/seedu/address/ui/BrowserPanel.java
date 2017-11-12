@@ -15,6 +15,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -56,6 +57,7 @@ public class BrowserPanel extends UiPart<Region> {
 
                         if (newState == Worker.State.SUCCEEDED) {
                             logger.info("Loaded this page: " + browser.getEngine().getLocation());
+                            raise(new NewResultAvailableEvent("Page Loaded: " + browser.getEngine().getLocation()));
                         }
 
                     }
@@ -67,10 +69,12 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
         logger.info("Loading Google search of " + person.getName());
+        raise(new NewResultAvailableEvent("Loading Google search of " + person.getName()));
     }
 
     private void loadPersonAddress(ReadOnlyPerson person) {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+        raise(new NewResultAvailableEvent("Loading Address search of " + person.getName()));
     }
 
     /**
@@ -80,10 +84,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (webLink.toStringWebLinkTag().equals("others")) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading Personal Page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -93,10 +97,12 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading " + websiteRequested + " page of " + selectedPerson.getName());
+                raise(new NewResultAvailableEvent("Loading " + websiteRequested
+                        + " page of " + selectedPerson.getName()));
                 return;
             }
         });
-        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
@@ -109,6 +115,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        raise(new NewResultAvailableEvent("Loading Landing Page..."));
     }
 
     /**
