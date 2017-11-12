@@ -64,7 +64,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
             });
             buttonList.add(newbutton);
         });
-        buttonList.add(searchButton);        
+        buttonList.add(searchButton);
         if (!selectedPerson.addressProperty().get().toString().equals("-")) {
             buttonList.add(mapsButton);
         }
