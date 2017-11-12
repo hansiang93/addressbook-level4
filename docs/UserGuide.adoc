@@ -404,6 +404,25 @@ Note: If you experience issues with opening up the User Profile Window, delete t
 ,then try again. A new User Profile will be created.
 // end::userProfileUI[]
 
+// tag::futureUpdates[]
+=== Dedicated Twitter/Facebook/Instagram Updates `Coming V2.0`
+
+The dedicated social media status updates would be added in `V2.0` as part of SocialBook's focus on the User's need to be informed of any latest updates.
+
+As it is currently tough to keep track of each and every update on all the possible social media platforms, only the very latest few updates would be included from all the social media links in this window.
+
+This window will take up a small amount of space on the right of the current browser window in SocialBook, and display the updates in a chronological order.
+
+=== Automatic update of contact information `Coming V2.0`
+
+The User will be able to expect SocialBook to update the Contact information as they are updated on various Social Media platforms, mainly Facebook.
+
+Each time the User loads the information of the current contact, the User will be prompted of updates available to the User's contact should they be different on the Social Media Platform.
+
+The User will then be given the option to update the fields available.
+
+// end::futureUpdates[]
+
 === Saving the data
 
 Address book data and user profile data are saved in the hard disk automatically after any command that changes the data. +
@@ -435,7 +454,7 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Update User* : `update`
 * *Redo* : `redo`
-* *Web* : `web`
+* *Web* : `web facebook`
 
 // tag::commandaliases[]
 === Alternative Command Aliases
