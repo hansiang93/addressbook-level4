@@ -431,7 +431,7 @@ image::UiClassDiagram.png[width="800"]
 As you can see from the diagram, `WebsiteButtonBar` resides within the `MainWindow`, despite not having any interactions with the BrowserPanel directly.
 
 
-Suppose that the user has just launched the application. The `BrowserPanel` not be loaded.
+Suppose that the user has just launched the application. The `BrowserPanel` will not be loaded.
 
 Once the User selects a person from the `PersonListPanel`, which is a `PersonCard`, the `SelectedPerson` is updated through the use of an event trigger. The `BrowserPanel` then stores this `SelectedPerson` until it is updated through listening for the event trigger.
 

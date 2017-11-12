@@ -131,7 +131,7 @@ Format: `tagDelete [tag name]`
 
 ****
 * the matching of tag is case sensitive.
-* Tags that matches the tag inputted by the user wll be deleted.
+* Tags that matches the tag inputted by the user will be deleted.
 * only the tag set attached to each person will be searched.
 ****
 
