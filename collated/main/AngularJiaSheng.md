@@ -59,10 +59,7 @@ public class StringUtil {
 
         String preppedSentence = sentence;
 
-        if (preppedSentence.equalsIgnoreCase(preppedWord)) {
-            return true;
-        }
-        return false;
+        return preppedSentence.equalsIgnoreCase(preppedWord);
     }
 
     /**
@@ -539,7 +536,7 @@ public class UniqueWebLinkList implements Iterable<WebLink> {
  */
 public class WebLink {
 
-    private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "No spaces should be allowed in the weblink inputted.";
+    private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "No spaces should be allowed in the weblink input.";
     private static final String DEFAULT_TAG = "others";
 
     private  String webLinkInput;

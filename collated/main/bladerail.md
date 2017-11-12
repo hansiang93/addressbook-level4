@@ -12,7 +12,7 @@ public class UserPersonChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "UserPerson changed: " + userPerson.getName();
+        return "UserPerson changed: \n" + userPerson.getAsText();
     }
 
     public UserPerson getUserPerson() {
@@ -374,6 +374,9 @@ public class UpdateUserCommand extends Command {
     public static final String ARG_REMARK = "remark";
     public static final String ARG_TAG = "tag";
     public static final String ARG_WEB_LINK = "weblink";
+```
+###### \java\seedu\address\logic\parser\CliSyntax.java
+``` java
 }
 ```
 ###### \java\seedu\address\logic\parser\RemarkCommandParser.java
@@ -673,10 +676,14 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
 ``` java
     @Override
     public void sortFilteredPersonList(String filterType) {
+        Predicate<? super ReadOnlyPerson> currPredicate = filteredPersons.getPredicate();
+        if (currPredicate == null) {
+            currPredicate = PREDICATE_SHOW_ALL_PERSONS;
+        }
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
         this.filteredPersons = new FilteredList<>(sortedList);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        filteredPersons.setPredicate(currPredicate);
         indicateAddressBookChanged();
     }
 
@@ -691,7 +698,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
     /** Raises an event to indicate the model has changed */
-    public void indicateUserPersonChanged() {
+    private void indicateUserPersonChanged() {
         raise(new UserPersonChangedEvent(userPerson));
         logger.info("Updated User Person: " + userPerson);
     }
@@ -1042,7 +1049,7 @@ public class SampleUserPersonUtil {
     @Override
     @Subscribe
     public void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local User Profile data changed, saving to file"));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "\nLocal User Profile data changed, saving to file"));
         try {
             saveUserPerson(event.getUserPerson());
         } catch (IOException e) {
@@ -1221,6 +1228,10 @@ public class XmlUserProfileStorage implements UserProfileStorage {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
     /**
      * Displays the user profile to the user
      */
@@ -1300,22 +1311,12 @@ public class UserProfileWindow extends UiPart<Region> {
 
     /**
      * Sets accelerators for the UserProfileWindow
-     * @param scene
+     * @param scene Current scene
      */
     private void setAccelerators(Scene scene) {
-        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), ()-> handleCancel());
-    }
+        scene.getAccelerators().put(KeyCombination.valueOf("ESC"), this::handleCancel);
+        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), this::handleOk);
 
-    /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(UserPerson userPerson) {
-        nameTextField.textProperty().bind(Bindings.convert(userPerson.nameProperty()));
-        phoneTextField.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
-        addressTextField.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
-        emailTextField.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
-        webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
     /**
@@ -1339,7 +1340,7 @@ public class UserProfileWindow extends UiPart<Region> {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
-            logger.info("UserPerson updated via UserProfileWindow, saving");
+            logger.fine("UserPerson updated via UserProfileWindow, saving");
             stage.close();
         } catch (Exception e) {
             logger.fine("Invalid UserPerson modification");
@@ -1348,24 +1349,17 @@ public class UserProfileWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.fine(LogsCenter.getEventHandlingLogMessage(event));
     }
 
     /**
      * Updates the user person
      */
-    void updateUserPerson() throws Exception {
+    private void updateUserPerson() throws Exception {
         try {
             userPerson.setName(new Name(nameTextField.getText()));
         } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Name value, only alphanumeric values accepted");
-            throw new Exception();
-        }
-
-        try {
-            userPerson.setPhone(new Phone(phoneTextField.getText()));
-        } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Phone number, only numeric values accepted");
+            statusLabel.setText(MESSAGE_NAME_CONSTRAINTS);
             throw new Exception();
         }
 
@@ -1378,14 +1372,29 @@ public class UserProfileWindow extends UiPart<Region> {
             userPerson.setEmail(emailList);
 
         } catch (IllegalValueException e) {
-            statusLabel.setText("Email(s) must be in x@x format");
+            statusLabel.setText(MESSAGE_EMAIL_CONSTRAINTS);
             throw new Exception();
         }
 
         try {
-            userPerson.setAddress(new Address(addressTextField.getText()));
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setPhone(new Phone(null));
+            } else {
+                userPerson.setPhone(new Phone(phoneTextField.getText()));
+            }
         } catch (IllegalValueException e) {
-            statusLabel.setText("Please input a valid address value");
+            statusLabel.setText(MESSAGE_PHONE_CONSTRAINTS);
+            throw new Exception();
+        }
+
+        try {
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setAddress(new Address(null));
+            } else {
+                userPerson.setAddress(new Address(addressTextField.getText()));
+            }
+        } catch (IllegalValueException e) {
+            statusLabel.setText(MESSAGE_ADDRESS_CONSTRAINTS);
             throw new Exception();
         }
 

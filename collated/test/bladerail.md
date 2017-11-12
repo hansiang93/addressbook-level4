@@ -35,7 +35,7 @@ public class UserProfileWindowHandle extends StageHandle {
     private static final String WEBLINK_FIELD_ID = "#webLinkTextField";
     private static final String okButton_ID = "#okButton";
     private static final String cancelButton_ID = "#cancelButton";
-
+    private static final String statusLabel_ID = "#statusLabel";
 
     private final TextField nameTextField;
     private final TextField phoneTextField;
@@ -44,6 +44,7 @@ public class UserProfileWindowHandle extends StageHandle {
     private final TextField webLinkTextField;
     private final Button okButton;
     private final Button cancelButton;
+    private final Label statusLabel;
 
     public UserProfileWindowHandle(Stage userProfileWindowStage) {
         super(userProfileWindowStage);
@@ -55,6 +56,7 @@ public class UserProfileWindowHandle extends StageHandle {
         this.webLinkTextField = getChildNode(WEBLINK_FIELD_ID);
         this.okButton = getChildNode(okButton_ID);
         this.cancelButton = getChildNode(cancelButton_ID);
+        this.statusLabel = getChildNode(statusLabel_ID);
     }
 
     /**
@@ -65,10 +67,18 @@ public class UserProfileWindowHandle extends StageHandle {
     }
 
     /**
-     * Opens the {@code UserProfileWindow} by pressing the shortcut key associated
-     * with the menu bar in {@code UserProfileWindow}.
+     * Closes the {@code UserProfileWindow} by pressing the shortcut key associated
+     * with the cancel button in {@code UserProfileWindow}.
      */
-    public void closeUserProfileWindowUsingAccelerator() {
+    public void closeUserProfileWindowUsingCancelAccelerator() {
+        guiRobot.push(KeyCode.ESCAPE);
+    }
+
+    /**
+     * Closes the {@code UserProfileWindow} by pressing the shortcut key associated
+     * with the ok button in {@code UserProfileWindow}.
+     */
+    public void closeUserProfileWindowUsingOkAccelerator() {
         guiRobot.push(KeyCode.ENTER);
     }
 
@@ -120,12 +130,15 @@ public class UserProfileWindowHandle extends StageHandle {
         return cancelButton;
     }
 
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
+
     /**
      * Click the ok button
      */
     public void clickOk() {
         Platform.runLater(() -> {
-            //okButton.arm();
             okButton.fire();
         });
     }
@@ -238,7 +251,7 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
 
         new UserProfileWindowHandle(
                 guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
-        ).closeUserProfileWindowUsingAccelerator();
+        ).closeUserProfileWindowUsingCancelAccelerator();
         mainWindowHandle.focus();
     }
 
@@ -445,81 +458,68 @@ public class SortCommandTest {
     private Model model;
     private Model expectedModel;
     private SortCommand sortCommand;
-    private String filterType;
 
     @Test
     public void execute_sortByNameSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        filterType = ARG_NAME;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
-
+        List<ReadOnlyPerson> sortedListByName = getSortedTypicalPersons();
+        sortUnsortedAddressBookByFilterType(ARG_NAME, sortedListByName);
     }
 
     @Test
     public void execute_sortByDefaultSortsByNameSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-        filterType = ARG_DEFAULT;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
-
+        List<ReadOnlyPerson> sortedListByName = getSortedTypicalPersons();
+        sortUnsortedAddressBookByFilterType(ARG_DEFAULT, sortedListByName);
     }
 
     @Test
     public void execute_sortByEmailSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE),
                 new Person(GEORGE), new Person(DANIEL), new Person(CARL),
                 new Person(BENSON), new Person(FIONA), new Person(ELLE));
-        expectedModel = createExpectedModel(sortedList);
-        filterType = ARG_EMAIL;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+        sortUnsortedAddressBookByFilterType(ARG_EMAIL, sortedList);
 
     }
 
     @Test
     public void execute_sortByPhoneSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE),
                 new Person(DANIEL), new Person(ELLE), new Person(FIONA), new Person(GEORGE),
                 new Person(CARL), new Person(BENSON));
-        expectedModel = createExpectedModel(sortedList);
-        filterType = ARG_PHONE;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+        sortUnsortedAddressBookByFilterType(ARG_PHONE, sortedList);
 
     }
 
     @Test
     public void execute_sortByAddressSuccess() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(DANIEL),
                 new Person(ALICE), new Person(BENSON), new Person(GEORGE), new Person(FIONA),
                 new Person(ELLE), new Person(CARL));
-        expectedModel = createExpectedModel(sortedList);
-        showFirstPersonOnly(model);
-        filterType = ARG_ADDRESS;
-
-        sortCommand = prepareCommand(filterType);
-        assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+        sortUnsortedAddressBookByFilterType(ARG_ADDRESS, sortedList);
 
     }
 
     @Test
+    public void execute_sortCommandSortsLastShownList() {
+        List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE),
+                new Person(DANIEL), new Person(ELLE), new Person(FIONA), new Person(GEORGE),
+                new Person(CARL), new Person(BENSON));
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
+        expectedModel = createExpectedModel(sortedList);
+
+
+        Predicate<ReadOnlyPerson> predicate = new ContainsKeywordsPredicate(Arrays.asList("Street"));
+        model.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        String filterType = ARG_PHONE;
+
+        sortCommand = prepareCommand(filterType);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
+    }
+
+    @Test
     public void equals() {
-        filterType = "";
+        String filterType = "";
 
         final SortCommand standardCommand = new SortCommand(filterType);
 
@@ -563,6 +563,20 @@ public class SortCommandTest {
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
         }
+    }
+
+    /**
+     * Sorts the unsortedAddressBook by indicated filter type and matches it with the expected list order
+     * @param filterType A filtertype
+     * @param sortedList A sorted list of {@code ReadOnlyPerson}
+     */
+    private void sortUnsortedAddressBookByFilterType(String filterType, List<ReadOnlyPerson> sortedList) {
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
+        expectedModel = createExpectedModel(sortedList);
+
+        sortCommand = prepareCommand(filterType);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SUCCESS, filterType), expectedModel);
     }
 }
 ```
@@ -962,6 +976,11 @@ public class TypicalUserPerson {
         assertEquals(userProfileWindowHandle.getEmail(), userPerson.getEmailAsText());
         assertEquals(userProfileWindowHandle.getWebLink(), userPerson.getWebLinksAsText());
     }
+
+    public static void assertUserProfileWindowStatusLabelEquals(
+            UserProfileWindowHandle userProfileWindowHandle, String text) {
+        assertEquals(text, userProfileWindowHandle.getStatusLabel().getText());
+    }
 ```
 ###### \java\seedu\address\ui\UserProfileWindowTest.java
 ``` java
@@ -969,10 +988,10 @@ public class UserProfileWindowTest extends GuiUnitTest {
 
     private Model model = new ModelManager();
 
-    private UserProfileWindow userProfileWindow;
-    private UserProfileWindowHandle userProfileWindowHandle;
 
     private UserPerson userPerson = model.getUserPerson();
+    private UserProfileWindow userProfileWindow;
+    private UserProfileWindowHandle userProfileWindowHandle;
 
     @Before
     public void setUp() throws Exception {
@@ -1001,11 +1020,11 @@ public class UserProfileWindowTest extends GuiUnitTest {
     public void updateUserPersonSuccess() throws Exception {
         userPerson = new UserPerson();
         UserPerson james = getTypicalUserPerson();
-        userProfileWindowHandle.getNameTextField().setText(james.getName().toString());
-        userProfileWindowHandle.getAddressTextField().setText(james.getAddress().toString());
-        userProfileWindowHandle.getPhoneTextField().setText(james.getPhone().toString());
-        userProfileWindowHandle.getEmailTextField().setText(james.getEmailAsText());
-        userProfileWindowHandle.getWebLinkTextField().setText(james.getWebLinksAsText());
+        setNameTextField(james.getName().toString());
+        setAddressTextField(james.getAddress().toString());
+        setPhoneTextField(james.getPhone().toString());
+        setEmailTextField(james.getEmailAsText());
+        setWebLinkTextField(james.getWebLinksAsText());
 
         userProfileWindowHandle.clickOk();
         setUp();
@@ -1014,14 +1033,77 @@ public class UserProfileWindowTest extends GuiUnitTest {
     }
 
     @Test
+    public void updateUserPersonInvalidField() {
+        userPerson = new UserPerson();
+        UserPerson william = new UserPerson(WILLIAM);
+        setNameTextField("");
+        setAddressTextField("");
+        setPhoneTextField("");
+        setEmailTextField("");
+        setWebLinkTextField("");
+
+        // Invalid name
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_NAME_CONSTRAINTS);
+
+        // Invalid Email
+        setNameTextField(william.getName().toString());
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_EMAIL_CONSTRAINTS);
+
+        // Invalid Phone
+        setEmailTextField(william.getEmailAsText());
+        setPhoneTextField("TTT");
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertEquals(MESSAGE_PHONE_CONSTRAINTS,
+                userProfileWindowHandle.getStatusLabel().getText());
+
+        // Invalid Email again
+        setEmailTextField("abc");
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_EMAIL_CONSTRAINTS);
+
+        // Address is always valid
+        setEmailTextField(william.getEmailAsText());
+        setAddressTextField(william.getAddress().toString());
+        userProfileWindowHandle.clickOk();
+
+        guiRobot.sleep(250);
+        assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
+                MESSAGE_PHONE_CONSTRAINTS);
+
+        // All values are now correct
+        setPhoneTextField(william.getPhone().toString());
+        setWebLinkTextField(william.getWebLinksAsText());
+        userProfileWindowHandle.clickOk();
+        guiRobot.sleep(250);
+
+        try {
+            setUp();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Verify profile is now correctly saved
+        assertUserProfileWindowEquals(userProfileWindowHandle, william);
+    }
+
+    @Test
     public void cancelButtonDoesNotUpdate() throws Exception {
         userPerson = new UserPerson();
         UserPerson william = new UserPerson(WILLIAM);
-        userProfileWindowHandle.getNameTextField().setText(william.getName().toString());
-        userProfileWindowHandle.getAddressTextField().setText(william.getAddress().toString());
-        userProfileWindowHandle.getPhoneTextField().setText(william.getPhone().toString());
-        userProfileWindowHandle.getEmailTextField().setText(william.getEmailAsText());
-        userProfileWindowHandle.getWebLinkTextField().setText(william.getWebLinksAsText());
+        setNameTextField(william.getName().toString());
+        setAddressTextField(william.getAddress().toString());
+        setPhoneTextField(william.getPhone().toString());
+        setEmailTextField(william.getEmailAsText());
+        setWebLinkTextField(william.getWebLinksAsText());
 
         userProfileWindowHandle.clickCancel();
         setUp();
@@ -1030,13 +1112,43 @@ public class UserProfileWindowTest extends GuiUnitTest {
     }
 
     /**
-     * Asserts that the UserProfile window isn't open.
+     * Sets Name Text Field in UserProfileHandle
+     * @param text
      */
-    private void assertUserProfileWindowNotOpen() {
-        assertFalse("Window still open", userProfileWindowHandle.isWindowPresent());
+    private void setNameTextField(String text) {
+        userProfileWindowHandle.getNameTextField().setText(text);
     }
 
+    /**
+     * Sets Address Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setAddressTextField(String text) {
+        userProfileWindowHandle.getAddressTextField().setText(text);
+    }
 
+    /**
+     * Sets Phone Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setPhoneTextField(String text) {
+        userProfileWindowHandle.getPhoneTextField().setText(text);
+    }
 
+    /**
+     * Sets Email Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setEmailTextField(String text) {
+        userProfileWindowHandle.getEmailTextField().setText(text);
+    }
+
+    /**
+     * Sets WebLink Text Field in UserProfileHandle
+     * @param text
+     */
+    private void setWebLinkTextField(String text) {
+        userProfileWindowHandle.getWebLinkTextField().setText(text);
+    }
 }
 ```

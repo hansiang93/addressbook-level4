@@ -132,11 +132,34 @@ public class WebCommand extends Command {
             + "Parameters: 'facebook' OR 'instagram' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
-```
-###### \java\seedu\address\logic\commands\WebCommand.java
-``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
-            + " {[facebook|instagram|linkedin|maps|search|personal]}";
+            + " {[facebook|instagram|maps|search|personal]}";
+
+    public static final String MESSAGE_SUCCESS = "WebLink loading...";
+
+    private final String targetWebsite;
+
+    public WebCommand(String targetWebsite) {
+        this.targetWebsite = targetWebsite;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (!WEBSITES_MAP.containsValue(targetWebsite)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_WEBLINK_TAG);
+        }
+        EventsCenter.getInstance().post(new WebsiteSelectionRequestEvent(targetWebsite));
+
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof WebCommand // instanceof handles nulls
+                && targetWebsite.equals(((WebCommand) other).targetWebsite));
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
@@ -196,7 +219,7 @@ public class WebCommandParser implements Parser<WebCommand> {
         WEBSITES_MAP.put("maps", "mapsView");
         WEBSITES_MAP.put("search", "searchView");
         WEBSITES_MAP.put("instagram", "instagram");
-        WEBSITES_MAP.put("linkedin", "linkedin");
+        WEBSITES_MAP.put("twitter", "twitter");
         WEBSITES_MAP.put("personal", "others");
     }
 
@@ -281,6 +304,7 @@ public class AutoCompleteSuggestions {
 ```
 ###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
+
 /**
  * The Browser Panel of the App.
  */
@@ -306,19 +330,37 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        browser.getEngine().setJavaScriptEnabled(true);
         loadDefaultPage();
         registerAsAnEventHandler(this);
+        browser.getEngine().getLoadWorker().stateProperty().addListener(
+                new ChangeListener<Worker.State>() {
+                    @Override
+                    public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
+                        if (newState == Worker.State.SUCCEEDED) {
+                            logger.info("Loaded this page: " + browser.getEngine().getLocation());
+                        }
+
+                    }
+                });
     }
 
 
+    /**
+     * Loads the selected Person's Google search by name page.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
         logger.info("Loading Google search of " + person.getName());
     }
 
+    /**
+     * Loads the selected Person's address search via Google Maps search.
+     */
     private void loadPersonAddress(ReadOnlyPerson person) {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+        logger.info("Loading Address search of " + person.getName());
     }
 
     /**
@@ -328,10 +370,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (webLink.toStringWebLinkTag().equals("others")) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading Personal Page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -341,10 +383,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading " + websiteRequested + " page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
@@ -357,6 +399,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        logger.info("Loading Landing Page...");
     }
 
     /**
@@ -404,6 +447,9 @@ public class BrowserPanel extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        TextFields.bindAutoCompletion(commandTextField,
+                AutoCompleteSuggestions.getSuggestionList())
+                .setMinWidth(450);
     }
 ```
 ###### \java\seedu\address\ui\DetailedPersonCard.java
@@ -531,7 +577,8 @@ public class DetailedPersonCard extends UiPart<Region> {
         webLinks.getChildren().clear();
         person.getWebLinks().forEach(webLink -> {
             Label webLinkLabel = new Label(webLink.toStringWebLink());
-            webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
+            webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()) + ";"
+                                  + "-fx-text-fill: white;");
             webLinks.getChildren().add(webLinkLabel);
         });
     }
@@ -637,7 +684,9 @@ public class WebsiteButtonBar extends UiPart<Region> {
             buttonList.add(newbutton);
         });
         buttonList.add(searchButton);
-        buttonList.add(mapsButton);
+        if (!selectedPerson.addressProperty().get().toString().equals("-")) {
+            buttonList.add(mapsButton);
+        }
         buttonBar.getButtons().setAll(buttonList);
     }
 }
@@ -647,9 +696,12 @@ public class WebsiteButtonBar extends UiPart<Region> {
 * {
     -fx-base-background-color-0: #181b1d;
     -fx-base-background-color-1: #2e3138;
+    -fx-button-pressed-color: white;
+    -fx-button-hovor-color: #3a3a3a;
     -fx-base-text-fill-color: white;
     -fx-base-text-fill-color-alt: black;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: white;
     -fx-label-text-fill-color: #010505;
     -fx-list-cell-even: #3c3e3f;
     -fx-list-cell-odd: #4a4f58;
@@ -659,14 +711,259 @@ public class WebsiteButtonBar extends UiPart<Region> {
 }
 
 ```
+###### \resources\view\DarkTheme.css
+``` css
+/*adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd*/
+body {
+    background-color: #272727;
+    padding: 30px;
+}
+
+.fakeButtons {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: 1px 1px 1px 1px;
+    position: relative;
+    top: 6px;
+    left: 6px;
+    background-color: #ff3b47;
+    border-color: #9d252b;
+    display: inline-block;
+}
+
+.fakeMinimize {
+    left: 11px;
+    background-color: #ffc100;
+    border-color: #9d802c;
+}
+
+.fakeZoom {
+    left: 16px;
+    background-color: #00d742;
+    border-color: #049931;
+}
+
+.fakeMenu {
+    width: 1000px;
+    box-sizing: border-box;
+    height: 25px;
+    background-color: #bbb;
+    margin: 0 0 0 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.fakeScreen {
+    background-color: #151515;
+    box-sizing: border-box;
+    width: 1000px;
+    margin: 0 0 0 0;
+    padding: 45px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+p {
+    position: relative;
+    left: 20%;
+    margin-left: -8.5em;
+    text-align: left;
+    font-size: 1.25em;
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+span {
+    color: #fff;
+    font-weight: bold;
+}
+
+.line1 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 1s steps(40, end) forwards;
+    -moz-animation: type .5s 1s steps(40, end) forwards;
+    -o-animation: type .5s 1s steps(40, end) forwards;
+    animation: type .5s 1s steps(40, end) forwards;
+}
+
+.cursor1 {
+    -webkit-animation: blink 1s 2s 2 forwards;
+    -moz-animation: blink 1s 2s 2 forwards;
+    -o-animation: blink 1s 2s 2 forwards;
+    animation: blink 1s 2s 2 forwards;
+}
+
+.line2 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 4.25s steps(20, end) forwards;
+    -moz-animation: type .5s 4.25s steps(20, end) forwards;
+    -o-animation: type .5s 4.25s steps(20, end) forwards;
+    animation: type .5s 4.25s steps(20, end) forwards;
+}
+
+.cursor2 {
+    -webkit-animation: blink 1s 5.25s 2 forwards;
+    -moz-animation: blink 1s 5.25s 2 forwards;
+    -o-animation: blink 1s 5.25s 2 forwards;
+    animation: blink 1s 5.25s 2 forwards;
+}
+
+.line3 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 7.5s steps(20, end) forwards;
+    -moz-animation: type .5s 7.5s steps(20, end) forwards;
+    -o-animation: type .5s 7.5s steps(20, end) forwards;
+    animation: type .5s 7.5s steps(20, end) forwards;
+}
+
+.cursor3 {
+    -webkit-animation: blink 1s 8.5s 2 forwards;
+    -moz-animation: blink 1s 8.5s 2 forwards;
+    -o-animation: blink 1s 8.5s 2 forwards;
+    animation: blink 1s 8.5s 2 forwards;
+}
+
+.line4 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 10.75s steps(20, end) forwards;
+    -moz-animation: type .5s 10.75s steps(20, end) forwards;
+    -o-animation: type .5s 10.75s steps(20, end) forwards;
+    animation: type .5s 10.75s steps(20, end) forwards;
+}
+
+.cursor4 {
+    -webkit-animation: blink 1s 11.75s forwards;
+    -moz-animation: blink 1s 11.75s forwards;
+    -o-animation: blink 1s 11.75s forwards;
+    animation: blink 1s 11.75s forwards;
+}
+
+.line5 {
+    color: #fff;
+    -webkit-animation: type .5s 15s steps(20, end) forwards;
+    -moz-animation: type .5s 15s steps(20, end) forwards;
+    -o-animation: type .5s 15s steps(20, end) forwards;
+    animation: type .5s 15s steps(20, end) forwards;
+}
+
+.cursor5 {
+    -webkit-animation: blink 1s 16s infinite;
+    -moz-animation: blink 1s 16s infinite;
+    -o-animation: blink 1s 16s infinite;
+    animation: blink 1s 16s infinite;
+}
+
+@-webkit-keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes type {
+    to {
+        width: 50em;
+    }
+}
+
+@-moz-keyframes type {
+    to {
+        width: 50em;
+    }
+}
+
+@-o-keyframes type {
+    to {
+        width: 50em;
+    }
+}
+
+@keyframes type {
+    to {
+        width: 50em;
+    }
+}
+/*adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd*/
+```
 ###### \resources\view\DarkTheme2.css
 ``` css
 * {
     -fx-base-background-color-0: #0b0c0d;
     -fx-base-background-color-1: #45484B;
+    -fx-button-pressed-color: white;
+    -fx-button-hovor-color: #3a3a3a;
     -fx-base-text-fill-color: white;
     -fx-base-text-fill-color-alt: black;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: white;
     -fx-label-text-fill-color: #010505;
     -fx-list-cell-even: #676556;
     -fx-list-cell-odd: #524e3b;
@@ -891,25 +1188,21 @@ public class WebsiteButtonBar extends UiPart<Region> {
     -fx-background-color: -fx-base-background-color-0;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 8pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: -fx-base-text-fill-color;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: -fx-button-hovor-color;
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
+    -fx-background-color: -fx-button-pressed-color;
     -fx-text-fill: -fx-base-background-color-0;
 }
 
 .button:focused {
-    -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
+    -fx-border-color: -fx-base-text-fill-color, -fx-base-text-fill-color;
 }
 
 .button:disabled, .button:default:disabled {
@@ -920,7 +1213,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
 .button:default {
     -fx-background-color: -fx-focus-color;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: -fx-base-text-fill-color-labels;
 }
 
 .button:default:hover {
@@ -1103,7 +1396,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 }
 
 #webLinks .label {
-    -fx-text-fill: -fx-base-text-fill-color-labels;
+    -fx-text-fill: -fx-base-text-fill-color-weblink-labels;
     -fx-background-color: transparent;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 4;
@@ -1111,6 +1404,28 @@ public class WebsiteButtonBar extends UiPart<Region> {
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+```
+###### \resources\view\default.html
+``` html
+<body class="background">
+<div class=fakeMenu>
+    <div class="fakeButtons fakeClose"></div>
+    <div class="fakeButtons fakeMinimize"></div>
+    <div class="fakeButtons fakeZoom"></div>
+</div>
+<div class="fakeScreen">
+    <p class="line1">&#91;&nbsp;&ldquo;Thank you for choosing Social Book!.&rdquo;,<span class="cursor1">_</span></p>
+    <p class="line2">&nbsp;&nbsp;&ldquo;We hope you enjoy this CLI-based contacts book.&rdquo;,<span class="cursor2">_</span></p>
+    <p class="line3">&nbsp;&nbsp;&ldquo;Press the F1 button to see the UserGuide and get started &rdquo;<span class="cursor3">_</span></p>
+    <p class="line4">&nbsp;&nbsp;&ldquo;Contact us at 'https://github.com/CS2103AUG2017-F11-B2/main' for any issues &rdquo;&nbsp;&#93;<span class="cursor4">_</span></p>
+    <p class="line5">> (:<span class="cursor5">_</span></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <!--adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd-->
+</div>
+</body>
+</html>
 ```
 ###### \resources\view\DetailedPersonListCard.fxml
 ``` fxml
@@ -1182,9 +1497,12 @@ public class WebsiteButtonBar extends UiPart<Region> {
 * {
     -fx-base-background-color-0: #69D2E7;
     -fx-base-background-color-1: #A7DBD8;
+    -fx-button-pressed-color: #7a7a7a;
+    -fx-button-hovor-color: #999999;
     -fx-base-text-fill-color: black;
     -fx-base-text-fill-color-alt: white;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: black;
     -fx-label-text-fill-color: #010505;
     -fx-list-cell-even: #E0E4CC;
     -fx-list-cell-odd: #A7DBD8;

@@ -113,6 +113,17 @@ include::../DeveloperGuide.adoc[tag=styling]
 
 ---
 
+* Setup the default.html page
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=defaultPage]
+
+#End of Extract#
+
+---
+
 * Setting up of Project Tools on team Repo
 * Main reviewer of all PRs, and main maintainer of team tools on https://github.com/CS2103AUG2017-F11-B2/main/issues[Issues] and https://github.com/CS2103AUG2017-F11-B2/main/projects[Projects]
 * Assisted on issues on the class forum (Issues https://github.com/nus-cs2103-AY1718S1/forum/issues/129[#129], https://github.com/nus-cs2103-AY1718S1/forum/issues/144[#144])

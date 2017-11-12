@@ -32,7 +32,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class ChangeThemeCommand extends Command {
 
-    public static final String COMMAND_WORD = "ChangeToTheme";
+    public static final String COMMAND_WORD = "changeToTheme";
     public static final String COMMAND_ALIAS = "ct";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -52,7 +52,7 @@ public class ChangeThemeCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         String[] themeList = new String[]{"/view/DarkTheme.css", "/view/DarkTheme2.css", "/view/LightTheme.css",
-            "/view/LightTheme.css"};
+            "/view/LightTheme2.css"};
         if (targetIndex > themeList.length) {
             throw new CommandException(Messages.MESSAGE_INVALID_THEME_INDEX);
         }
@@ -219,9 +219,12 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
 * {
     -fx-base-background-color-0: #EFF1F3;
     -fx-base-background-color-1: #DBD3D8;
+    -fx-button-pressed-color: #7a7a7a;
+    -fx-button-hovor-color: #999999;
     -fx-base-text-fill-color: #14141f;
     -fx-base-text-fill-color-alt: white;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: black;
     -fx-label-text-fill-color: #b3b3b3;
     -fx-list-cell-even: #D8B4A0;
     -fx-list-cell-odd: #DBD3D8;
@@ -443,28 +446,24 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     -fx-border-color: #e2e2e2;
     -fx-border-width: 1;
     -fx-background-radius: 0;
-    -fx-background-color: -fx-base-background-color-0;
+    -fx-background-color: -fx-base-background-color-1;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 8pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: -fx-base-text-fill-color;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: -fx-button-hovor-color;
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
+    -fx-background-color: -fx-button-pressed-color;
     -fx-text-fill: -fx-base-background-color-0;
 }
 
 .button:focused {
-    -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
+    -fx-border-color: -fx-base-text-fill-color, -fx-base-text-fill-color;
 }
 
 .button:disabled, .button:default:disabled {
@@ -475,7 +474,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
 
 .button:default {
     -fx-background-color: -fx-focus-color;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: -fx-base-text-fill-color-labels;
 }
 
 .button:default:hover {
@@ -658,7 +657,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
 }
 
 #webLinks .label {
-    -fx-text-fill: -fx-base-text-fill-color-labels;
+    -fx-text-fill: -fx-base-text-fill-color-weblink-labels;
     -fx-background-color: transparent;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 4;
