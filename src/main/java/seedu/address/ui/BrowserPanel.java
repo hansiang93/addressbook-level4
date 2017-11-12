@@ -54,10 +54,8 @@ public class BrowserPanel extends UiPart<Region> {
                 new ChangeListener<Worker.State>() {
                     @Override
                     public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
-
                         if (newState == Worker.State.SUCCEEDED) {
                             logger.info("Loaded this page: " + browser.getEngine().getLocation());
-                            raise(new NewResultAvailableEvent("Page Loaded: " + browser.getEngine().getLocation()));
                         }
 
                     }
@@ -72,7 +70,6 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
         logger.info("Loading Google search of " + person.getName());
-        raise(new NewResultAvailableEvent("Loading Google search of " + person.getName()));
     }
 
     /**
@@ -80,7 +77,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonAddress(ReadOnlyPerson person) {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
-        raise(new NewResultAvailableEvent("Loading Address search of " + person.getName()));
+        logger.info("Loading Address search of " + person.getName());
     }
 
     /**
@@ -104,8 +101,6 @@ public class BrowserPanel extends UiPart<Region> {
             if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
                 loadPage(webLink.toStringWebLink());
                 logger.info("Loading " + websiteRequested + " page of " + selectedPerson.getName());
-                raise(new NewResultAvailableEvent("Loading " + websiteRequested
-                        + " page of " + selectedPerson.getName()));
                 return;
             }
         });
@@ -121,7 +116,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
-        raise(new NewResultAvailableEvent("Loading Landing Page..."));
+        logger.info("Loading Landing Page...");
     }
 
     /**
