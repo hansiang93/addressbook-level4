@@ -1,5 +1,5 @@
 # bladerail
-###### \java\guitests\guihandles\MainMenuHandle.java
+###### /java/guitests/guihandles/MainMenuHandle.java
 ``` java
     /**
      * Opens the {@code UserprofileWindow} using the menu bar in {@code MainWindow}.
@@ -9,7 +9,7 @@
     }
 
 ```
-###### \java\guitests\guihandles\MainMenuHandle.java
+###### /java/guitests/guihandles/MainMenuHandle.java
 ``` java
     /**
      * Opens the {@code UserProfileWindow} by pressing the shortcut key associated
@@ -20,7 +20,7 @@
     }
 
 ```
-###### \java\guitests\guihandles\UserProfileWindowHandle.java
+###### /java/guitests/guihandles/UserProfileWindowHandle.java
 ``` java
 /**
  * Provides a handle for the UserProfileWindow
@@ -151,7 +151,7 @@ public class UserProfileWindowHandle extends StageHandle {
     }
 }
 ```
-###### \java\guitests\UserProfileWindowTest.java
+###### /java/guitests/UserProfileWindowTest.java
 ``` java
 public class UserProfileWindowTest extends AddressBookGuiTest {
 
@@ -290,7 +290,7 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommandTest.java
+###### /java/seedu/address/logic/commands/RemarkCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code RemarkCommand}.
@@ -407,8 +407,11 @@ public class RemarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ShareCommandTest.java
+###### /java/seedu/address/logic/commands/ShareCommandTest.java
 ``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code ShareCommand}.
+ */
 public class ShareCommandTest {
 
     @Rule
@@ -448,7 +451,7 @@ public class ShareCommandTest {
 }
 
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code SortCommand}.
@@ -580,7 +583,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UpdateUserCommandTest.java
+###### /java/seedu/address/logic/commands/UpdateUserCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for UpdateUserCommand.
@@ -664,7 +667,72 @@ public class UpdateUserCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\UpdateUserCommandParserTest.java
+###### /java/seedu/address/logic/parser/SortCommandParserTest.java
+``` java
+public class SortCommandParserTest {
+    private SortCommandParser parser = new SortCommandParser();
+
+    @Test
+    public void parse_valid_arguments() throws Exception {
+
+        // FilterType: Name
+        assertValidFilterType(ARG_NAME_ALIAS, ARG_NAME);
+        assertValidFilterType(ARG_NAME, ARG_NAME);
+
+        // FilterType: Email
+        assertValidFilterType(ARG_EMAIL, ARG_EMAIL);
+        assertValidFilterType(ARG_EMAIL_ALIAS, ARG_EMAIL);
+
+        // FilterType: Phone
+        assertValidFilterType(ARG_PHONE, ARG_PHONE);
+        assertValidFilterType(ARG_PHONE_ALIAS, ARG_PHONE);
+
+        // FilterType: Address
+        assertValidFilterType(ARG_ADDRESS, ARG_ADDRESS);
+        assertValidFilterType(ARG_ADDRESS_ALIAS, ARG_ADDRESS);
+
+        // FilterType: Default.
+        assertValidFilterType(ARG_DEFAULT, ARG_DEFAULT);
+
+        // No filterType argument: Should set to default
+        assertValidFilterType("", ARG_DEFAULT);
+
+        // filterType can be in any case:
+        assertValidFilterType("nAMe", ARG_NAME);
+        assertValidFilterType("NaME", ARG_NAME);
+        assertValidFilterType("eMaIl", ARG_EMAIL);
+        assertValidFilterType("PHone", ARG_PHONE);
+        assertValidFilterType("aDDress", ARG_ADDRESS);
+        assertValidFilterType("PHONE", ARG_PHONE);
+
+    }
+
+    @Test
+    public void parse_invalid_arguments() throws Exception {
+        String filterType = "abc";
+        String userInput = SortCommand.COMMAND_WORD + " " + filterType;
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedMessage);
+
+        filterType = "olosw";
+        userInput = SortCommand.COMMAND_WORD + " " + filterType;
+        expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedMessage);
+    }
+
+    /**
+     * Asserts if the input filterType returns a SortCommand with the expected filterType
+     * @param inputFilterType
+     * @param expectedFilterType
+     */
+    public void assertValidFilterType(String inputFilterType, String expectedFilterType) {
+        String userInput = SortCommand.COMMAND_WORD + " " + inputFilterType;
+        SortCommand expectedCommand = new SortCommand(expectedFilterType);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/UpdateUserCommandParserTest.java
 ``` java
 public class UpdateUserCommandParserTest {
 
@@ -765,7 +833,7 @@ public class UpdateUserCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\person\UserPersonTest.java
+###### /java/seedu/address/model/person/UserPersonTest.java
 ``` java
 public class UserPersonTest {
 
@@ -797,7 +865,20 @@ public class UserPersonTest {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlUserProfileStorageTest.java
+###### /java/seedu/address/storage/StorageManagerTest.java
+``` java
+    @Test
+    public void handleUserProfileChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
+                new JsonUserPrefsStorage("dummy"),
+                new XmlUserProfileStorageExceptionThrowingStub("dummy"));
+        storage.handleUserPersonChangedEvent(new UserPersonChangedEvent(
+                new UserPerson(getTypicalUserPerson())));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+```
+###### /java/seedu/address/storage/XmlUserProfileStorageTest.java
 ``` java
 public class XmlUserProfileStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlUserProfileStorageTest/");
@@ -891,7 +972,35 @@ public class XmlUserProfileStorageTest {
 
 }
 ```
-###### \java\seedu\address\testutil\TypicalPersons.java
+###### /java/seedu/address/TestApp.java
+``` java
+    public static final String SAVE_LOCATION_FOR_TESTING_USERPROFILE = TestUtil
+            .getFilePathInSandboxFolder("sampleUserProfile.xml");
+```
+###### /java/seedu/address/TestApp.java
+``` java
+    protected String saveFileLocationUserProfile = SAVE_LOCATION_FOR_TESTING_USERPROFILE;
+```
+###### /java/seedu/address/TestApp.java
+``` java
+        userPrefs.setUserProfileFilePath(saveFileLocationUserProfile);
+```
+###### /java/seedu/address/TestApp.java
+``` java
+    @Override
+    protected UserPerson initUserPerson(UserProfileStorage storage) {
+        UserPerson userPerson = super.initUserPerson(storage);
+        userPerson.setName(SampleUserPersonUtil.getDefaultSamplePerson().getName());
+        userPerson.setPhone(SampleUserPersonUtil.getDefaultSamplePerson().getPhone());
+        userPerson.setEmail(SampleUserPersonUtil.getDefaultSamplePerson().getEmail());
+        userPerson.setAddress(SampleUserPersonUtil.getDefaultSamplePerson().getAddress());
+        userPerson.setWebLinks(SampleUserPersonUtil.getDefaultSamplePerson().getWebLinks());
+
+        return userPerson;
+
+    }
+```
+###### /java/seedu/address/testutil/TypicalPersons.java
 ``` java
     /**
      * Returns an {@code AddressBook} with all the typical persons in sorted order.
@@ -931,7 +1040,7 @@ public class XmlUserProfileStorageTest {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 ```
-###### \java\seedu\address\testutil\TypicalUserPerson.java
+###### /java/seedu/address/testutil/TypicalUserPerson.java
 ``` java
 /**
  * A utility class containing a list of {@code UserPerson} objects to be used in tests.
@@ -963,7 +1072,7 @@ public class TypicalUserPerson {
     }
 }
 ```
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
@@ -982,7 +1091,7 @@ public class TypicalUserPerson {
         assertEquals(text, userProfileWindowHandle.getStatusLabel().getText());
     }
 ```
-###### \java\seedu\address\ui\UserProfileWindowTest.java
+###### /java/seedu/address/ui/UserProfileWindowTest.java
 ``` java
 public class UserProfileWindowTest extends GuiUnitTest {
 
