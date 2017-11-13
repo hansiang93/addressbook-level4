@@ -50,6 +50,9 @@ public class XmlUserPerson {
         for (Email email : source.getEmail()) {
             emailList.add(email);
         }
+        if (emailList.isEmpty()) {
+            emailList.add(new Email());
+        }
         address = source.getAddress().value;
         webLinkList = new ArrayList<>();
         for (WebLink webLink : source.getWebLinks()) {
@@ -60,12 +63,7 @@ public class XmlUserPerson {
     public UserPerson getUser() throws IllegalValueException {
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final ArrayList<Email> email;
-        if (this.emailList == null) {
-            email = new ArrayList<>();
-        } else {
-            email = new ArrayList<>(this.emailList);
-        }
+        final ArrayList<Email> email = new ArrayList<>(this.emailList);
 
         final Address address = new Address(this.address);
 
