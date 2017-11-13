@@ -1,5 +1,5 @@
 # zhoukai07
-###### /java/seedu/address/logic/commands/ChangeThemeCommandTest.java
+###### \java\seedu\address\logic\commands\ChangeThemeCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -73,7 +73,7 @@ public class ChangeThemeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
         // multiple emails - all email accepted
         Person expectedPersonMultipleEmails = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -82,7 +82,7 @@ public class ChangeThemeCommandTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPersonMultipleEmails));
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
         //missing phone -> accepted
         Person expectedPersonMissingPhone = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(null)
@@ -90,22 +90,27 @@ public class ChangeThemeCommandTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_EMPTY
                         + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
                 new AddCommand(expectedPersonMissingPhone));
-
-        //missing phone -> accepted
+        //missing address -> accepted
         Person expectedPersonMissingAddress = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(null).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB + ADDRESS_DESC_EMPTY,
                 new AddCommand(expectedPersonMissingAddress));
+        //missing email -> accepted
+        Person expectedPersonMissingEmail = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail((String[]) null).withAddress(VALID_ADDRESS_BOB).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
+                        + EMAIL_DESC_EMPTY + ADDRESS_DESC_BOB,
+               new AddCommand(expectedPersonMissingEmail));
 ```
-###### /java/seedu/address/logic/parser/EditCommandParserTest.java
+###### \java\seedu\address\logic\parser\EditCommandParserTest.java
 ``` java
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
+        // There is no invalid address
         assertParseFailure(parser, "1" + INVALID_ADD_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid add tag
         assertParseFailure(parser, "1" + INVALID_REM_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid remove tag
 ```
-###### /java/seedu/address/logic/parser/EditCommandParserTest.java
+###### \java\seedu\address\logic\parser\EditCommandParserTest.java
 ``` java
         // add tags
         userInput = targetIndex.getOneBased() + TAG_ADD_DESC_FRIEND;
@@ -125,7 +130,7 @@ public class ChangeThemeCommandTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 ```
-###### /java/seedu/address/logic/parser/EditCommandParserTest.java
+###### \java\seedu\address\logic\parser\EditCommandParserTest.java
 ``` java
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_AMY, VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
@@ -135,7 +140,7 @@ public class ChangeThemeCommandTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
@@ -145,7 +150,7 @@ public class ChangeThemeCommandTest {
         ParserUtil.parseEmail(expectedEmail);
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseEmail_validValue_returnsEmail() throws Exception {
