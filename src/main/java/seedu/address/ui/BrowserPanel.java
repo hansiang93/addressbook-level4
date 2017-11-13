@@ -30,7 +30,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     //@@author bladerail
     public static final String GOOGLE_SEARCH_CAPTCHA_PREFIX = "https://ipv4.google.com/sorry/index?continue=";
-    //@@author
+    //@@author hansiang93
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     public static final String MAPS_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/search/";
 
@@ -141,19 +141,23 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleWebsiteSelectionEvent(WebsiteSelectionRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        switch (event.getWebsiteRequested()) {
-        case "mapsView":
-            loadPersonAddress(selectedPerson);
-            break;
-        case "searchView":
-            loadPersonPage(selectedPerson);
-            break;
-        case "othersView":
-            loadPersonPersonal(selectedPerson);
-            break;
-        default:
-            loadPersonSocial(selectedPerson, event.getWebsiteRequested());
-            break;
+        if (selectedPerson != null) {
+            switch (event.getWebsiteRequested()) {
+            case "mapsView":
+                loadPersonAddress(selectedPerson);
+                break;
+            case "searchView":
+                loadPersonPage(selectedPerson);
+                break;
+            case "othersView":
+                loadPersonPersonal(selectedPerson);
+                break;
+            default:
+                loadPersonSocial(selectedPerson, event.getWebsiteRequested());
+                break;
+            }
+        } else {
+            loadDefaultPage();
         }
     }
 }

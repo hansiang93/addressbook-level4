@@ -1,5 +1,27 @@
 # bladerail
-###### /java/guitests/guihandles/MainMenuHandle.java
+###### \java\guitests\guihandles\BrowserPanelHandle.java
+``` java
+    /**
+     * Returns true if the current {@code URL} is different from the value remembered by the most recent
+     * {@code rememberUrl()} call.
+     */
+    public boolean isUrlChanged() {
+        if (!lastRememberedUrl.equals(getLoadedUrl())) {
+            String urlString = lastRememberedUrl.toExternalForm();
+            urlString = urlString.replaceAll("\\+", "%2B")
+                    .replaceAll("\\?", "%3F")
+                    .replaceAll("\\=", "%3D")
+                    .replaceAll("\\&", "%26");
+            String expectedCaptchaUrl = GOOGLE_SEARCH_CAPTCHA_PREFIX + urlString;
+
+            return !getLoadedUrl().toExternalForm().contains(expectedCaptchaUrl);
+        } else {
+            return false;
+        }
+    }
+
+```
+###### \java\guitests\guihandles\MainMenuHandle.java
 ``` java
     /**
      * Opens the {@code UserprofileWindow} using the menu bar in {@code MainWindow}.
@@ -9,7 +31,7 @@
     }
 
 ```
-###### /java/guitests/guihandles/MainMenuHandle.java
+###### \java\guitests\guihandles\MainMenuHandle.java
 ``` java
     /**
      * Opens the {@code UserProfileWindow} by pressing the shortcut key associated
@@ -20,7 +42,7 @@
     }
 
 ```
-###### /java/guitests/guihandles/UserProfileWindowHandle.java
+###### \java\guitests\guihandles\UserProfileWindowHandle.java
 ``` java
 /**
  * Provides a handle for the UserProfileWindow
@@ -151,7 +173,7 @@ public class UserProfileWindowHandle extends StageHandle {
     }
 }
 ```
-###### /java/guitests/UserProfileWindowTest.java
+###### \java\guitests\UserProfileWindowTest.java
 ``` java
 public class UserProfileWindowTest extends AddressBookGuiTest {
 
@@ -290,7 +312,7 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code RemarkCommand}.
@@ -407,7 +429,7 @@ public class RemarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ShareCommandTest.java
+###### \java\seedu\address\logic\commands\ShareCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code ShareCommand}.
@@ -451,7 +473,7 @@ public class ShareCommandTest {
 }
 
 ```
-###### /java/seedu/address/logic/commands/SortCommandTest.java
+###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code SortCommand}.
@@ -583,7 +605,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UpdateUserCommandTest.java
+###### \java\seedu\address\logic\commands\UpdateUserCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for UpdateUserCommand.
@@ -667,7 +689,7 @@ public class UpdateUserCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/SortCommandParserTest.java
+###### \java\seedu\address\logic\parser\SortCommandParserTest.java
 ``` java
 public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();
@@ -732,7 +754,7 @@ public class SortCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UpdateUserCommandParserTest.java
+###### \java\seedu\address\logic\parser\UpdateUserCommandParserTest.java
 ``` java
 public class UpdateUserCommandParserTest {
 
@@ -761,7 +783,7 @@ public class UpdateUserCommandParserTest {
         assertParseFailure(parser, INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
         assertParseFailure(parser, INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
+        // There is no invalid address
 
         // invalid phone followed by valid email
         assertParseFailure(parser, INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_PHONE_CONSTRAINTS);
@@ -833,7 +855,7 @@ public class UpdateUserCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/UserPersonTest.java
+###### \java\seedu\address\model\person\UserPersonTest.java
 ``` java
 public class UserPersonTest {
 
@@ -865,7 +887,7 @@ public class UserPersonTest {
     }
 }
 ```
-###### /java/seedu/address/storage/StorageManagerTest.java
+###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
     @Test
     public void handleUserProfileChangedEvent_exceptionThrown_eventRaised() {
@@ -878,7 +900,7 @@ public class UserPersonTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 ```
-###### /java/seedu/address/storage/XmlUserProfileStorageTest.java
+###### \java\seedu\address\storage\XmlUserProfileStorageTest.java
 ``` java
 public class XmlUserProfileStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlUserProfileStorageTest/");
@@ -972,20 +994,20 @@ public class XmlUserProfileStorageTest {
 
 }
 ```
-###### /java/seedu/address/TestApp.java
+###### \java\seedu\address\TestApp.java
 ``` java
     public static final String SAVE_LOCATION_FOR_TESTING_USERPROFILE = TestUtil
             .getFilePathInSandboxFolder("sampleUserProfile.xml");
 ```
-###### /java/seedu/address/TestApp.java
+###### \java\seedu\address\TestApp.java
 ``` java
     protected String saveFileLocationUserProfile = SAVE_LOCATION_FOR_TESTING_USERPROFILE;
 ```
-###### /java/seedu/address/TestApp.java
+###### \java\seedu\address\TestApp.java
 ``` java
         userPrefs.setUserProfileFilePath(saveFileLocationUserProfile);
 ```
-###### /java/seedu/address/TestApp.java
+###### \java\seedu\address\TestApp.java
 ``` java
     @Override
     protected UserPerson initUserPerson(UserProfileStorage storage) {
@@ -1000,7 +1022,7 @@ public class XmlUserProfileStorageTest {
 
     }
 ```
-###### /java/seedu/address/testutil/TypicalPersons.java
+###### \java\seedu\address\testutil\TypicalPersons.java
 ``` java
     /**
      * Returns an {@code AddressBook} with all the typical persons in sorted order.
@@ -1040,7 +1062,7 @@ public class XmlUserProfileStorageTest {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 ```
-###### /java/seedu/address/testutil/TypicalUserPerson.java
+###### \java\seedu\address\testutil\TypicalUserPerson.java
 ``` java
 /**
  * A utility class containing a list of {@code UserPerson} objects to be used in tests.
@@ -1053,12 +1075,12 @@ public class TypicalUserPerson {
     public static final ReadOnlyPerson JAMES = new PersonBuilder().withName("James Wong")
             .withAddress("456 Rochor Ave 3").withEmail("james@gmail.com")
             .withPhone("84712836")
-            .withWebLinks("jameswong@facebook.com").build();
+            .withWebLinks("https://www.facebook.com/jameswong").build();
 
     public static final ReadOnlyPerson WILLIAM = new PersonBuilder().withName("William Sim")
             .withAddress("112 Clementi Ave 4").withEmail("william@hotmail.com")
             .withPhone("91332588")
-            .withWebLinks("williamsim@facebook.com").build();
+            .withWebLinks("https://www.facebook.com/william").build();
 
     private TypicalUserPerson() {} // prevents instantiation
 
@@ -1072,7 +1094,48 @@ public class TypicalUserPerson {
     }
 }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\BrowserPanelTest.java
+``` java
+        String urlString = GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX;
+        URL expectedPersonUrl = new URL(urlString);
+        URL expectedCaptchaUrl = new URL(
+                GOOGLE_SEARCH_CAPTCHA_PREFIX + getCaptchaUrl(urlString));
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertTrue(expectedPersonUrl.equals(browserPanelHandle.getLoadedUrl())
+                || browserPanelHandle.getLoadedUrl().toExternalForm()
+                .contains(expectedCaptchaUrl.toExternalForm()));
+```
+###### \java\seedu\address\ui\BrowserPanelTest.java
+``` java
+        String urlString = GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX;
+        URL expectedPersonUrl = new URL(urlString);
+        URL expectedCaptchaUrl = new URL(
+                GOOGLE_SEARCH_CAPTCHA_PREFIX + getCaptchaUrl(urlString));
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertTrue(expectedPersonUrl.equals(browserPanelHandle.getLoadedUrl())
+                || browserPanelHandle.getLoadedUrl().toExternalForm()
+                .contains(expectedCaptchaUrl.toExternalForm()));
+```
+###### \java\seedu\address\ui\BrowserPanelTest.java
+``` java
+    /**
+     * Returns the string format of a captcha URL
+     * @param urlString
+     * @return
+     */
+    private String getCaptchaUrl(String urlString) {
+        String updatedUrlString = urlString.replaceAll("\\+", "%2B")
+                .replaceAll("\\?", "%3F")
+                .replaceAll("\\=", "%3D")
+                .replaceAll("\\&", "%26");
+        return updatedUrlString;
+    }
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
@@ -1091,7 +1154,7 @@ public class TypicalUserPerson {
         assertEquals(text, userProfileWindowHandle.getStatusLabel().getText());
     }
 ```
-###### /java/seedu/address/ui/UserProfileWindowTest.java
+###### \java\seedu\address\ui\UserProfileWindowTest.java
 ``` java
 public class UserProfileWindowTest extends GuiUnitTest {
 
@@ -1159,6 +1222,7 @@ public class UserProfileWindowTest extends GuiUnitTest {
 
         // Invalid Email
         setNameTextField(william.getName().toString());
+        setEmailTextField("abc");
         userProfileWindowHandle.clickOk();
         guiRobot.sleep(250);
         assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
@@ -1260,4 +1324,24 @@ public class UserProfileWindowTest extends GuiUnitTest {
         userProfileWindowHandle.getWebLinkTextField().setText(text);
     }
 }
+```
+###### \java\systemtests\AddressBookSystemTest.java
+``` java
+            String urlString = GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX;
+            urlString = urlString.replaceAll("\\+", "%2B");
+            urlString = urlString.replaceAll("\\?", "%3F");
+            urlString = urlString.replaceAll("\\=", "%3D");
+            urlString = urlString.replaceAll("\\&", "%26");
+            expectedCaptchaUrl = new URL(
+                    GOOGLE_SEARCH_CAPTCHA_PREFIX + urlString);
+            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
+
+        } catch (MalformedURLException mue) {
+            throw new AssertionError("URL expected to be valid.");
+        }
+        assertTrue(expectedUrl.equals(getBrowserPanel().getLoadedUrl())
+                || getBrowserPanel().getLoadedUrl().toExternalForm()
+                .contains(expectedCaptchaUrl.toExternalForm()));
 ```

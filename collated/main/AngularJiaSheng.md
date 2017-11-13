@@ -1,5 +1,5 @@
 # AngularJiaSheng
-###### /java/seedu/address/commons/util/StringUtil.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
 
 /**
@@ -92,7 +92,7 @@ public class StringUtil {
     }
 }
 ```
-###### /java/seedu/address/commons/util/WebLinkUtil.java
+###### \java\seedu\address\commons\util\WebLinkUtil.java
 ``` java
 
 import java.util.HashMap;
@@ -127,7 +127,7 @@ public class WebLinkUtil {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteTagCommand.java
+###### \java\seedu\address\logic\commands\DeleteTagCommand.java
 ``` java
 /**
  * Deletes a tag from all contacts in the address book.
@@ -143,7 +143,7 @@ public class DeleteTagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " classmate";
 
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names, "
             + "phone number, address, tags and weblink contain any of "
@@ -152,7 +152,7 @@ public class DeleteTagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " alice 987 clementi";
 
 ```
-###### /java/seedu/address/logic/parser/DeleteTagCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a deleteTagCommand object.
@@ -174,7 +174,7 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/EditCommandParser.java
+###### \java\seedu\address\logic\parser\EditCommandParser.java
 ``` java
     /**
      * Parses {@code Collection<String> webLinks} into a {@code Set<weblink>} if {@code webLinks} is non-empty.
@@ -192,7 +192,7 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
         return Optional.of(ParserUtil.parseWebLink(webLinkSet));
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
@@ -213,7 +213,7 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
             if (checkRepeatedWebLinkInCategory(webLinkSet, inputWebLinkString)) {
                 webLinkSet.add(new WebLink(inputWebLinkString));
             } else {
-                throw new IllegalValueException("Only one link per category: facebook ,"
+                throw new IllegalValueException("Only one link per category: facebook, "
                         + "instagram or twitter");
             }
         }
@@ -246,7 +246,7 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
 
 }
 ```
-###### /java/seedu/address/model/person/ContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\ContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name}, Phone, Address, Email, Tag, WebLink,
@@ -305,7 +305,7 @@ public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/model/person/FilterKeywordsPredicate.java
+###### \java\seedu\address\model\person\FilterKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name, Phone Address, email, tag or weblink}
@@ -337,7 +337,7 @@ public class FilterKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
 
     /**
@@ -366,7 +366,7 @@ public class FilterKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
 ```
-###### /java/seedu/address/model/person/ReadOnlyPerson.java
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
 ``` java
     /**
      * Formats the person as text, showing all contact details, without any additional text or descriptions.
@@ -390,7 +390,7 @@ public class FilterKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
 ```
-###### /java/seedu/address/model/person/weblink/UniqueWebLinkList.java
+###### \java\seedu\address\model\person\weblink\UniqueWebLinkList.java
 ``` java
 /**
  * A list of tags that enforces no nulls and uniqueness between its elements.
@@ -527,7 +527,7 @@ public class UniqueWebLinkList implements Iterable<WebLink> {
 
 }
 ```
-###### /java/seedu/address/model/person/weblink/WebLink.java
+###### \java\seedu\address\model\person\weblink\WebLink.java
 ``` java
 /**
  * Represents a WebLink in the address book.
@@ -536,7 +536,10 @@ public class UniqueWebLinkList implements Iterable<WebLink> {
  */
 public class WebLink {
 
-    private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "No spaces should be allowed in the weblink input.";
+    private static final String MESSAGE_WEB_LINK_CONSTRAINTS = "Please enter a valid weblink "
+            + "starting with http or https.";
+    private static final String WEB_LINK_VALIDATION_REGEX = "^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]"
+            + "*[-a-zA-Z0-9+&@#/%=~_|]";
     private static final String DEFAULT_TAG = "others";
 
     private  String webLinkInput;
@@ -551,6 +554,9 @@ public class WebLink {
 
         requireNonNull(name);
         this.webLinkInput = name.trim();
+        if (!isValidWebLink(webLinkInput)) {
+            throw new IllegalValueException(MESSAGE_WEB_LINK_CONSTRAINTS);
+        }
         this.webLinkTag = DEFAULT_TAG;
 
         HashMap<String, String> webLinkTagMap = new WebLinkUtil().getMatchingWebsites();
@@ -565,6 +571,12 @@ public class WebLink {
         }
     }
 
+    /**
+     * Returns true if a given string is a valid tag name.
+     */
+    public static boolean isValidWebLink(String test) {
+        return test.matches(WEB_LINK_VALIDATION_REGEX);
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -600,7 +612,7 @@ public class WebLink {
     }
 }
 ```
-###### /java/seedu/address/model/util/SampleDataUtil.java
+###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
     public static Set<WebLink> getWebLinkSet(String... strings) throws IllegalValueException {
         HashSet<WebLink> webLinks = new HashSet<>();
@@ -611,7 +623,7 @@ public class WebLink {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedWebLink.java
+###### \java\seedu\address\storage\XmlAdaptedWebLink.java
 ``` java
 /**
  * JAXB-friendly adapted version of the WebLink.
