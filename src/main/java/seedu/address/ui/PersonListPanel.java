@@ -67,7 +67,7 @@ public class PersonListPanel extends UiPart<Region> {
         if (personListView.getItems().isEmpty()) {
             return Optional.empty();
         }
-        return personListView.getItems().get(1).getTagColors();
+        return personListView.getItems().get(0).getTagColors();
     }
 
     @Subscribe
