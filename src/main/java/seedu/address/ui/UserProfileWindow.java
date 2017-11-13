@@ -7,6 +7,7 @@ import static seedu.address.model.person.Phone.MESSAGE_PHONE_CONSTRAINTS;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Logger;
@@ -167,7 +168,7 @@ public class UserProfileWindow extends UiPart<Region> {
         }
 
         try {
-            if (phoneTextField.getText().equals("")) {
+            if (addressTextField.getText().equals("")) {
                 userPerson.setAddress(new Address(null));
             } else {
                 userPerson.setAddress(new Address(addressTextField.getText()));
@@ -178,16 +179,21 @@ public class UserProfileWindow extends UiPart<Region> {
         }
 
         try {
-            String[] webLinks = webLinkTextField.getText().split(", ");
+            if (webLinkTextField.getText().equals("")) {
+                Set<WebLink> webLinkSet = new HashSet<>();
+                userPerson.setWebLinks(webLinkSet);
+            } else {
+                String[] webLinks = webLinkTextField.getText().split(", ");
 
-            Comparator<WebLink> comparator = Comparator.comparing(WebLink::toStringWebLink);
+                Comparator<WebLink> comparator = Comparator.comparing(WebLink::toStringWebLink);
 
-            Set<WebLink> webLinkSet = new TreeSet<WebLink>(comparator);
+                Set<WebLink> webLinkSet = new TreeSet<WebLink>(comparator);
 
-            for (String curr : webLinks) {
-                webLinkSet.add(new WebLink(curr));
+                for (String curr : webLinks) {
+                    webLinkSet.add(new WebLink(curr));
+                }
+                userPerson.setWebLinks(webLinkSet);
             }
-            userPerson.setWebLinks(webLinkSet);
         } catch (IllegalValueException e) {
             statusLabel.setText("Please input a valid webLink");
             throw new Exception();
