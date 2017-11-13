@@ -730,8 +730,8 @@ variables. +
 
 
 // tag::FindFilter[]
-=== Find Command and & Filter Command
-The `find` and `filter` command controls the person panels to be displayed to the user by modifying the filteredPerson FilteredList in model. The `find` & `filter` command
+=== Find Command and Filter Command
+The `find` and `filter` command controls the person panels to be displayed to the user by modifying the filteredPerson FilteredList in model. The `find` and `filter` command
 will updated filteredPerson by calling the updateFilterPersonList to change the predicate. The main enhancement done is to allow `find` and `filter` command to be able to match keywords with
 all the attributes of a Person object (`Name`, `Phone`, `Address`, `Email`, `Tag` & `WebLink`) instead of just `Name` for `find command` and `Tag` for `filter` command(Our team's initial implementation).
 
