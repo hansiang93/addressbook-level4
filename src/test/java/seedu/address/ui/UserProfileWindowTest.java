@@ -86,6 +86,7 @@ public class UserProfileWindowTest extends GuiUnitTest {
 
         // Invalid Email
         setNameTextField(william.getName().toString());
+        setEmailTextField("abc");
         userProfileWindowHandle.clickOk();
         guiRobot.sleep(250);
         assertUserProfileWindowStatusLabelEquals(userProfileWindowHandle,
