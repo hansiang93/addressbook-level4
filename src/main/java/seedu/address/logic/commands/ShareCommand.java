@@ -44,12 +44,17 @@ public class ShareCommand extends Command {
                 .append(" ")
                 .append(PREFIX_NAME)
                 .append(src.getName())
-                .append(" ")
-                .append(PREFIX_PHONE)
-                .append(src.getPhone())
-                .append(" ")
-                .append(PREFIX_ADDRESS)
-                .append(src.getAddress());
+                .append(" ");
+
+        if (!src.getPhone().toString().equals("-")) {
+            builder.append(PREFIX_PHONE)
+                    .append(src.getPhone())
+                    .append(" ");
+        }
+        if (!src.getAddress().toString().equals("-")) {
+            builder.append(PREFIX_ADDRESS)
+                    .append(src.getAddress());
+        }
         for (Email email : src.getEmail()) {
             builder.append(" ")
                     .append(PREFIX_EMAIL)

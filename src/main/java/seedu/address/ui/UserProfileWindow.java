@@ -144,12 +144,16 @@ public class UserProfileWindow extends UiPart<Region> {
         }
 
         try {
-            String[] emails = emailTextField.getText().split(", ");
-            ArrayList<Email> emailList = new ArrayList<>();
-            for (String curr : emails) {
-                emailList.add(new Email(curr));
+            if (emailTextField.getText().equals("")) {
+                userPerson.setEmail(new ArrayList<>());
+            } else {
+                String[] emails = emailTextField.getText().split(", ");
+                ArrayList<Email> emailList = new ArrayList<>();
+                for (String curr : emails) {
+                    emailList.add(new Email(curr));
+                }
+                userPerson.setEmail(emailList);
             }
-            userPerson.setEmail(emailList);
 
         } catch (IllegalValueException e) {
             statusLabel.setText(MESSAGE_EMAIL_CONSTRAINTS);

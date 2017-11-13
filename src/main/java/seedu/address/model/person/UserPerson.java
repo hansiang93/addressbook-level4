@@ -114,7 +114,9 @@ public class UserPerson implements ReadOnlyPerson {
             builder.append(email.toString());
             builder.append(", ");
         }
-        builder.delete(builder.length() - 2, builder.length());
+        if (builder.length() != 0) {
+            builder.delete(builder.length() - 2, builder.length());
+        }
         return builder.toString();
     }
 

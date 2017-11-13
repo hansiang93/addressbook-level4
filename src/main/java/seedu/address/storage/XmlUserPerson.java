@@ -25,11 +25,11 @@ public class XmlUserPerson {
 
     @XmlElement(required = true)
     private String name;
-    @XmlElement(required = true)
+    @XmlElement
     private String phone;
-    @XmlElement(required = true)
+    @XmlElement
     private ArrayList<Email> emailList;
-    @XmlElement(required = true)
+    @XmlElement
     private String address;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -60,7 +60,13 @@ public class XmlUserPerson {
     public UserPerson getUser() throws IllegalValueException {
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final ArrayList<Email> email = new ArrayList<>(this.emailList);
+        final ArrayList<Email> email;
+        if (this.emailList == null) {
+            email = new ArrayList<>();
+        } else {
+            email = new ArrayList<>(this.emailList);
+        }
+
         final Address address = new Address(this.address);
 
         final List<WebLink> webLinkInputs = new ArrayList<>();
