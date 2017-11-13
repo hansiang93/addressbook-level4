@@ -544,9 +544,6 @@ As you can see from the diagram, the link between the `Logic` and the `Ui` exist
 
 This mechanism allows for the addition of other Ui components, such as buttons or tabs to replace the trigger event.
 
-[NOTE]
-If web command is executed before the selection of a `PersonCard`, the event trigger would simply load a default page.
-
 
 
 ==== Design Considerations
