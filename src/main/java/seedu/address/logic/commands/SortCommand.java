@@ -25,7 +25,7 @@ public class SortCommand extends Command {
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address]}";
 
     //@@author bladerail
-    public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
+    public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s.";
 
     private String filterType;
 
