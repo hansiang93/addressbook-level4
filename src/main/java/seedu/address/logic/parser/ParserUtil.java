@@ -76,7 +76,15 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+        if (phone.isPresent()) {
+            if (phone.get().equals("")) {
+                return Optional.of(new Phone(null));
+            } else {
+                return Optional.of(new Phone(phone.get()));
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
@@ -84,7 +92,15 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+        if (address.isPresent()) {
+            if (address.get().equals("")) {
+                return Optional.of(new Address(null));
+            } else {
+                return Optional.of(new Address(address.get()));
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
@@ -138,7 +154,7 @@ public class ParserUtil {
             if (checkRepeatedWebLinkInCategory(webLinkSet, inputWebLinkString)) {
                 webLinkSet.add(new WebLink(inputWebLinkString));
             } else {
-                throw new IllegalValueException("Only one link per category: facebook ,"
+                throw new IllegalValueException("Only one link per category: facebook, "
                         + "instagram or twitter");
             }
         }

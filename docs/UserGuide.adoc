@@ -361,7 +361,7 @@ Format: `exit`
 === Viewing address in Google Maps : `web maps`
 
 Changes the internal browser to the maps view of the address of a selected contact.
-Format `web facebook||instagram||linkedin||personal||maps`
+Format `web facebook||instagram||personal||maps`
 
 [NOTE]
 ====
@@ -445,11 +445,11 @@ There is no need to save manually.
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. +
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER [e/EMAIL]... a/ADDRESS [t/TAG]... [w/WEBLINK]...` +
+* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL]... [a/ADDRESS] [t/TAG]... [w/WEBLINK]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague w/google.com`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
@@ -473,8 +473,11 @@ e.g.`select 2`
 e.g `update n/James Leong p/92334311 e/james@gmail.com w/https://www.facebook.com/james`
 * *Share* : `share`
 * *Redo* : `redo`
-* *Web* : `web facebook`
-* *Change Theme* : `changeToTheme 1, 2, 3, or 4`
+* *Remark* : `remark INDEX r/REMARK`
+e.g `remark 1 r/Eats a lot`
+* *Web* : `web [facebook||instagram||personal||maps||search]`
+e.g `web facebook`
+* *Change Theme* : `changeToTheme [1, 2, 3, 4]`
 
 // tag::commandaliases[]
 === Alternative Command Aliases
@@ -484,12 +487,17 @@ e.g `update n/James Leong p/92334311 e/james@gmail.com w/https://www.facebook.co
 * *Delete* : `delete` or `d`
 * *Edit* : `edit` or `e`
 * *Find* : `find` or `f`
+* *Filter* : `filter` or `ft`
 * *List* : `list` or `l`
 * *Help* : `help` or `h`
-* *Select* : `select` or `s`
+* *Select* : `select` or `se`
+* *Sort* : `sort` or `s`
 * *History* : `history` or `his`
 * *Undo* : `undo` or `u`
+* *Update* : `update` or `up`
+* *Share* : `share` or `sh`
 * *Redo* : `redo` or `r`
+* *Remark* : `remark` or `rm`
 * *Web* : `web` or `w`
 * *ChangeTheme*: `changeToTheme` or `ct`
 

@@ -25,11 +25,11 @@ public class XmlUserPerson {
 
     @XmlElement(required = true)
     private String name;
-    @XmlElement(required = true)
+    @XmlElement
     private String phone;
-    @XmlElement(required = true)
+    @XmlElement
     private ArrayList<Email> emailList;
-    @XmlElement(required = true)
+    @XmlElement
     private String address;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -50,6 +50,9 @@ public class XmlUserPerson {
         for (Email email : source.getEmail()) {
             emailList.add(email);
         }
+        if (emailList.isEmpty()) {
+            emailList.add(new Email());
+        }
         address = source.getAddress().value;
         webLinkList = new ArrayList<>();
         for (WebLink webLink : source.getWebLinks()) {
@@ -61,6 +64,7 @@ public class XmlUserPerson {
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final ArrayList<Email> email = new ArrayList<>(this.emailList);
+
         final Address address = new Address(this.address);
 
         final List<WebLink> webLinkInputs = new ArrayList<>();

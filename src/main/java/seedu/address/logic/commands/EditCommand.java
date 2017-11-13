@@ -20,6 +20,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -60,7 +61,7 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com "
             + PREFIX_TAG + "owesMoney "
-            + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an"
+            + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an "
             + PREFIX_CLEAR_TAG;
     //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
@@ -203,7 +204,15 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setPhone(Phone phone) {
-            this.phone = phone;
+            if (phone.equals(Optional.empty())) {
+                try {
+                    this.phone = new Phone(null);
+                } catch (IllegalValueException e) {
+                    this.phone = phone;
+                }
+            } else {
+                this.phone = phone;
+            }
         }
 
         public Optional<Phone> getPhone() {
@@ -219,7 +228,15 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setAddress(Address address) {
-            this.address = address;
+            if (address.equals(Optional.empty())) {
+                try {
+                    this.address = new Address(null);
+                } catch (IllegalValueException e) {
+                    this.address = address;
+                }
+            } else {
+                this.address = address;
+            }
         }
 
         public Optional<Address> getAddress() {
