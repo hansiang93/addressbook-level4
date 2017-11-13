@@ -1,5 +1,5 @@
 # hansiang93
-###### /java/seedu/address/commons/events/ui/WebsiteSelectionRequestEvent.java
+###### \java\seedu\address\commons\events\ui\WebsiteSelectionRequestEvent.java
 ``` java
 /**
  * Represents a selection change in the Person List Panel
@@ -23,7 +23,7 @@ public class WebsiteSelectionRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddCommand.java
+###### \java\seedu\address\logic\commands\AddCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
             + PREFIX_NAME + "{NAME} "
@@ -33,15 +33,15 @@ public class WebsiteSelectionRequestEvent extends BaseEvent {
             + "[" + PREFIX_TAG + "TAG]... "
             + "[" + PREFIX_WEB_LINK + "WEB LINK]...";
 ```
-###### /java/seedu/address/logic/commands/DeleteCommand.java
+###### \java\seedu\address\logic\commands\DeleteCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {index}";
 ```
-###### /java/seedu/address/logic/commands/DeleteTagCommand.java
+###### \java\seedu\address\logic\commands\DeleteTagCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
             + PREFIX_PHONE + "{phone} "
@@ -49,7 +49,7 @@ public class WebsiteSelectionRequestEvent extends BaseEvent {
             + PREFIX_TAG + "{tag} "
             + PREFIX_WEB_LINK + "{weblink}";
 ```
-###### /java/seedu/address/logic/commands/FilterCommand.java
+###### \java\seedu\address\logic\commands\FilterCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -87,27 +87,27 @@ public class FilterCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword fragment}";
 ```
-###### /java/seedu/address/logic/commands/RemarkCommand.java
+###### \java\seedu\address\logic\commands\RemarkCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
             + "{Index} "
             + PREFIX_REMARK + "{Remark}";
 
 ```
-###### /java/seedu/address/logic/commands/SelectCommand.java
+###### \java\seedu\address\logic\commands\SelectCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {index}";
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address]}";
 
 ```
-###### /java/seedu/address/logic/commands/UpdateUserCommand.java
+###### \java\seedu\address\logic\commands\UpdateUserCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
             + " " + PREFIX_NAME + "{NAME} "
@@ -117,7 +117,7 @@ public class FilterCommand extends Command {
             + PREFIX_WEB_LINK + "{WEBLINK} ";
 
 ```
-###### /java/seedu/address/logic/commands/WebCommand.java
+###### \java\seedu\address\logic\commands\WebCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -129,11 +129,11 @@ public class WebCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Displays the social links of the selected person in the web view on the right.\n"
-            + "Parameters: 'facebook' OR 'instagram' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
+            + "Parameters: 'facebook' OR 'instagram' OR 'maps' OR 'search' OR 'twitter' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
-            + " {[facebook|instagram|maps|search|personal]}";
+            + " {[facebook|instagram|twitter|maps|search|personal]}";
 
     public static final String MESSAGE_SUCCESS = "WebLink loading...";
 
@@ -161,7 +161,7 @@ public class WebCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case FilterCommand.COMMAND_WORD:
         case FilterCommand.COMMAND_ALIAS:
@@ -172,14 +172,14 @@ public class WebCommand extends Command {
             return new ListCommand();
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case WebCommand.COMMAND_WORD:
         case WebCommand.COMMAND_ALIAS:
             return new WebCommandParser().parse(arguments);
 
 ```
-###### /java/seedu/address/logic/parser/FilterCommandParser.java
+###### \java\seedu\address\logic\parser\FilterCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FilterCommand object
@@ -205,7 +205,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/WebCommandParser.java
+###### \java\seedu\address\logic\parser\WebCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new SelectCommand object
@@ -245,7 +245,7 @@ public class WebCommandParser implements Parser<WebCommand> {
     }
 }
 ```
-###### /java/seedu/address/ui/AutoCompleteSuggestions.java
+###### \java\seedu\address\ui\AutoCompleteSuggestions.java
 ``` java
 
 /**
@@ -305,7 +305,7 @@ public class AutoCompleteSuggestions {
     }
 }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
 
 /**
@@ -315,6 +315,9 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     public static final String MAPS_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/search/";
 
@@ -425,24 +428,28 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleWebsiteSelectionEvent(WebsiteSelectionRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        switch (event.getWebsiteRequested()) {
-        case "mapsView":
-            loadPersonAddress(selectedPerson);
-            break;
-        case "searchView":
-            loadPersonPage(selectedPerson);
-            break;
-        case "othersView":
-            loadPersonPersonal(selectedPerson);
-            break;
-        default:
-            loadPersonSocial(selectedPerson, event.getWebsiteRequested());
-            break;
+        if (selectedPerson != null) {
+            switch (event.getWebsiteRequested()) {
+            case "mapsView":
+                loadPersonAddress(selectedPerson);
+                break;
+            case "searchView":
+                loadPersonPage(selectedPerson);
+                break;
+            case "othersView":
+                loadPersonPersonal(selectedPerson);
+                break;
+            default:
+                loadPersonSocial(selectedPerson, event.getWebsiteRequested());
+                break;
+            }
+        } else {
+            loadDefaultPage();
         }
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     public CommandBox(Logic logic) {
         super(FXML);
@@ -455,7 +462,7 @@ public class BrowserPanel extends UiPart<Region> {
                 .setMinWidth(450);
     }
 ```
-###### /java/seedu/address/ui/DetailedPersonCard.java
+###### \java\seedu\address\ui\DetailedPersonCard.java
 ``` java
 
 /**
@@ -614,7 +621,7 @@ public class DetailedPersonCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
 
 /**
@@ -635,7 +642,7 @@ public class PersonCard extends UiPart<Region> {
         webLinkColors.put("others", "grey");
     }
 ```
-###### /java/seedu/address/ui/WebsiteButtonBar.java
+###### \java\seedu\address\ui\WebsiteButtonBar.java
 ``` java
 /**
  * The Button Bar above the browser of the App.
@@ -694,7 +701,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
     }
 }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 * {
     -fx-base-background-color-0: #181b1d;
@@ -714,7 +721,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 }
 
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 /*adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd*/
 body {
@@ -956,7 +963,7 @@ span {
 }
 /*adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd*/
 ```
-###### /resources/view/DarkTheme2.css
+###### \resources\view\DarkTheme2.css
 ``` css
 * {
     -fx-base-background-color-0: #0b0c0d;
@@ -1206,6 +1213,7 @@ span {
 
 .button:focused {
     -fx-border-color: -fx-base-text-fill-color, -fx-base-text-fill-color;
+}
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
@@ -1407,7 +1415,29 @@ span {
     -fx-font-size: 11;
 }
 ```
-###### /resources/view/DetailedPersonListCard.fxml
+###### \resources\view\default.html
+``` html
+<body class="background">
+<div class=fakeMenu>
+    <div class="fakeButtons fakeClose"></div>
+    <div class="fakeButtons fakeMinimize"></div>
+    <div class="fakeButtons fakeZoom"></div>
+</div>
+<div class="fakeScreen">
+    <p class="line1">&#91;&nbsp;&ldquo;Thank you for choosing Social Book!.&rdquo;,<span class="cursor1">_</span></p>
+    <p class="line2">&nbsp;&nbsp;&ldquo;We hope you enjoy this CLI-based contacts book.&rdquo;,<span class="cursor2">_</span></p>
+    <p class="line3">&nbsp;&nbsp;&ldquo;Press the F1 button to see the UserGuide and get started &rdquo;<span class="cursor3">_</span></p>
+    <p class="line4">&nbsp;&nbsp;&ldquo;Contact us at 'https://github.com/CS2103AUG2017-F11-B2/main' for any issues &rdquo;&nbsp;&#93;<span class="cursor4">_</span></p>
+    <p class="line5">> (:<span class="cursor5">_</span></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <!--adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd-->
+</div>
+</body>
+</html>
+```
+###### \resources\view\DetailedPersonListCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1472,13 +1502,13 @@ span {
   </GridPane>
 </HBox>
 ```
-###### /resources/view/LightTheme2.css
+###### \resources\view\LightTheme2.css
 ``` css
 * {
     -fx-base-background-color-0: #69D2E7;
     -fx-base-background-color-1: #A7DBD8;
     -fx-button-pressed-color: #7a7a7a;
-    -fx-button-hovor-color: #3a3a3a;
+    -fx-button-hovor-color: #999999;
     -fx-base-text-fill-color: black;
     -fx-base-text-fill-color-alt: white;
     -fx-base-text-fill-color-labels: white;
@@ -1492,7 +1522,7 @@ span {
 }
 
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" maxWidth="400.0" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
@@ -1573,7 +1603,7 @@ span {
     <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
 </VBox>
 ```
-###### /resources/view/WebsiteButtonbar.fxml
+###### \resources\view\WebsiteButtonbar.fxml
 ``` fxml
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>

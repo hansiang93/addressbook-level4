@@ -1,5 +1,5 @@
 # bladerail
-###### /java/seedu/address/commons/events/model/UserPersonChangedEvent.java
+###### \java\seedu\address\commons\events\model\UserPersonChangedEvent.java
 ``` java
 /** Indicates the UserPerson in the model has changed*/
 public class UserPersonChangedEvent extends BaseEvent {
@@ -20,7 +20,7 @@ public class UserPersonChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/CopyToClipboardRequestEvent.java
+###### \java\seedu\address\commons\events\ui\CopyToClipboardRequestEvent.java
 ``` java
 /**
  * Indicates a request for copying a string to clipboard
@@ -44,7 +44,7 @@ public class CopyToClipboardRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommand.java
+###### \java\seedu\address\logic\commands\RemarkCommand.java
 ``` java
 /**
  * Changes the remark of an existing person in the address book.
@@ -64,7 +64,7 @@ public class RemarkCommand extends UndoableCommand {
             + PREFIX_REMARK + "likes dogs.";
 
 ```
-###### /java/seedu/address/logic/commands/RemarkCommand.java
+###### \java\seedu\address\logic\commands\RemarkCommand.java
 ``` java
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
@@ -140,7 +140,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ShareCommand.java
+###### \java\seedu\address\logic\commands\ShareCommand.java
 ``` java
 /**
  * Displays an add command for the user's contact
@@ -171,12 +171,17 @@ public class ShareCommand extends Command {
                 .append(" ")
                 .append(PREFIX_NAME)
                 .append(src.getName())
-                .append(" ")
-                .append(PREFIX_PHONE)
-                .append(src.getPhone())
-                .append(" ")
-                .append(PREFIX_ADDRESS)
-                .append(src.getAddress());
+                .append(" ");
+
+        if (!src.getPhone().toString().equals("-")) {
+            builder.append(PREFIX_PHONE)
+                    .append(src.getPhone())
+                    .append(" ");
+        }
+        if (!src.getAddress().toString().equals("-")) {
+            builder.append(PREFIX_ADDRESS)
+                    .append(src.getAddress());
+        }
         for (Email email : src.getEmail()) {
             builder.append(" ")
                     .append(PREFIX_EMAIL)
@@ -194,7 +199,7 @@ public class ShareCommand extends Command {
 }
 
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts all persons in the address book by indicated format.
@@ -215,9 +220,9 @@ public class SortCommand extends Command {
             + "Example: " + COMMAND_WORD + " name";
 
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
-    public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
+    public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s.";
 
     private String filterType;
 
@@ -251,7 +256,7 @@ public class SortCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UpdateUserCommand.java
+###### \java\seedu\address\logic\commands\UpdateUserCommand.java
 ``` java
 /**
  * Updates the model's UserPerson information.
@@ -274,7 +279,7 @@ public class UpdateUserCommand extends Command {
             + PREFIX_EMAIL + "johndoe@example.com";
 
 ```
-###### /java/seedu/address/logic/commands/UpdateUserCommand.java
+###### \java\seedu\address\logic\commands\UpdateUserCommand.java
 ``` java
     public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile: %1s";
     public static final String MESSAGE_NOT_UPDATED = "At least one field to update must be provided.";
@@ -325,27 +330,27 @@ public class UpdateUserCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/Logic.java
+###### \java\seedu\address\logic\Logic.java
 ``` java
     /** Returns the userPerson */
     UserPerson getUserPerson();
 
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     @Override
     public UserPerson getUserPerson() {
         return model.getUserPerson();
     }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case RemarkCommand.COMMAND_WORD:
         case RemarkCommand.COMMAND_ALIAS:
@@ -360,7 +365,7 @@ public class UpdateUserCommand extends Command {
             return new ShareCommand();
 
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
     public static final String ARG_DEFAULT = "default";
     public static final String ARG_NAME = "name";
@@ -375,12 +380,11 @@ public class UpdateUserCommand extends Command {
     public static final String ARG_TAG = "tag";
     public static final String ARG_WEB_LINK = "weblink";
 ```
-
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
 }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParser.java
+###### \java\seedu\address\logic\parser\RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -412,7 +416,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/SortCommandParser.java
+###### \java\seedu\address\logic\parser\SortCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new SortCommand object
@@ -487,7 +491,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UpdateUserCommandParser.java
+###### \java\seedu\address\logic\parser\UpdateUserCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UpdateUserCommand object
@@ -571,11 +575,11 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 }
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
     protected Clipboard clipboard;
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
         try {
             userPersonOptional = storage.readUserProfile();
@@ -591,7 +595,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
             initialUser = new UserPerson();
         }
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
     /**
      * Returns a {@code UserPerson} using the file at {@code storage}'s user prefs file path,
@@ -626,15 +630,15 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
         this.clipboard = Clipboard.getSystemClipboard();
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
             storage.saveUserPerson(model.getUserPerson());
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
     @Subscribe
     public void handleCopyToClipboardRequestEvent (CopyToClipboardRequestEvent event) {
@@ -642,7 +646,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
         clipboard.setContent(event.getToCopy());
     }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Sorts the filteredPerson list by the filterType, one of [Name/Email/Address/Phone]
@@ -665,7 +669,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
      */
     void updateUserPerson(ReadOnlyPerson editedPerson);
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public UserPerson getUserPerson() {
@@ -673,7 +677,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void sortFilteredPersonList(String filterType) {
@@ -689,7 +693,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void updateUserPerson(ReadOnlyPerson editedPerson) {
@@ -705,7 +709,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Sorts the internal list by order of a comparator, which by default is name.
@@ -722,21 +726,21 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
                 arg2 = person2.getName().toString().toLowerCase();
                 break;
             case ARG_PHONE:
-                arg1 = person1.getPhone().toString();
-                arg2 = person2.getPhone().toString();
+                arg1 = person1.getPhone().toString().toLowerCase();
+                arg2 = person2.getPhone().toString().toLowerCase();
                 break;
             case ARG_EMAIL:
-                arg1 = person1.getEmail().toString();
-                arg2 = person2.getEmail().toString();
+                arg1 = person1.getEmail().toString().toLowerCase();
+                arg2 = person2.getEmail().toString().toLowerCase();
                 break;
             case ARG_ADDRESS:
-                arg1 = person1.getAddress().toString();
-                arg2 = person2.getAddress().toString();
+                arg1 = person1.getAddress().toString().toLowerCase();
+                arg2 = person2.getAddress().toString().toLowerCase();
                 break;
             default:
                 // TODO: Make default sort by date added
-                arg1 = person1.getName().toString();
-                arg2 = person2.getName().toString();
+                arg1 = person1.getName().toString().toLowerCase();
+                arg2 = person2.getName().toString().toLowerCase();
                 break;
             }
             return arg1.compareTo(arg2);
@@ -746,7 +750,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/UserPerson.java
+###### \java\seedu\address\model\person\UserPerson.java
 ``` java
 /**
  * Represents the user's Profile in the address book.
@@ -845,7 +849,9 @@ public class UserPerson implements ReadOnlyPerson {
             builder.append(email.toString());
             builder.append(", ");
         }
-        builder.delete(builder.length() - 2, builder.length());
+        if (builder.length() != 0) {
+            builder.delete(builder.length() - 2, builder.length());
+        }
         return builder.toString();
     }
 
@@ -980,7 +986,7 @@ public class UserPerson implements ReadOnlyPerson {
     }
 }
 ```
-###### /java/seedu/address/model/UserPrefs.java
+###### \java\seedu\address\model\UserPrefs.java
 ``` java
     public String getUserProfileFilePath() {
         return userProfileFilePath;
@@ -991,7 +997,7 @@ public class UserPerson implements ReadOnlyPerson {
     }
 
 ```
-###### /java/seedu/address/model/util/SampleUserPersonUtil.java
+###### \java\seedu\address\model\util\SampleUserPersonUtil.java
 ``` java
 /**
  * Contains utility methods for creating sample UserPerson data.
@@ -1002,7 +1008,7 @@ public class SampleUserPersonUtil {
             ArrayList<Email> emails = new ArrayList<Email>();
             emails.add(new Email("default@default.com"));
             HashSet<WebLink> webLinks = new HashSet<>();
-            webLinks.add(new WebLink("default@facebook.com"));
+            webLinks.add(new WebLink("https://www.facebook.com/default"));
             return new Person (new Name("Default"), new Phone("00000000"), emails,
                             new Address("Default"), new Remark(""), new HashSet<Tag>(), webLinks);
         } catch (IllegalValueException e) {
@@ -1011,7 +1017,7 @@ public class SampleUserPersonUtil {
     }
 }
 ```
-###### /java/seedu/address/storage/Storage.java
+###### \java\seedu\address\storage\Storage.java
 ``` java
     @Override
     String getUserProfileFilePath();
@@ -1025,7 +1031,7 @@ public class SampleUserPersonUtil {
     void handleUserPersonChangedEvent(UserPersonChangedEvent upce);
 
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     @Override
     public String getUserProfileFilePath() {
@@ -1060,7 +1066,7 @@ public class SampleUserPersonUtil {
     }
 
 ```
-###### /java/seedu/address/storage/UserProfileStorage.java
+###### \java\seedu\address\storage\UserProfileStorage.java
 ``` java
 /**
  * Represents a storage for {@link seedu.address.model.AddressBook}.
@@ -1091,7 +1097,7 @@ public interface UserProfileStorage {
 
 }
 ```
-###### /java/seedu/address/storage/XmlUserPerson.java
+###### \java\seedu\address\storage\XmlUserPerson.java
 ``` java
 /**
  * An Immutable UserPerson that is serializable to XML format
@@ -1101,11 +1107,11 @@ public class XmlUserPerson {
 
     @XmlElement(required = true)
     private String name;
-    @XmlElement(required = true)
+    @XmlElement
     private String phone;
-    @XmlElement(required = true)
+    @XmlElement
     private ArrayList<Email> emailList;
-    @XmlElement(required = true)
+    @XmlElement
     private String address;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -1126,6 +1132,9 @@ public class XmlUserPerson {
         for (Email email : source.getEmail()) {
             emailList.add(email);
         }
+        if (emailList.isEmpty()) {
+            emailList.add(new Email());
+        }
         address = source.getAddress().value;
         webLinkList = new ArrayList<>();
         for (WebLink webLink : source.getWebLinks()) {
@@ -1137,6 +1146,7 @@ public class XmlUserPerson {
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final ArrayList<Email> email = new ArrayList<>(this.emailList);
+
         final Address address = new Address(this.address);
 
         final List<WebLink> webLinkInputs = new ArrayList<>();
@@ -1149,7 +1159,7 @@ public class XmlUserPerson {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlUserProfileStorage.java
+###### \java\seedu\address\storage\XmlUserProfileStorage.java
 ``` java
 /**
  * A class to access UserProfile stored in the hard disk as an xml file
@@ -1200,7 +1210,7 @@ public class XmlUserProfileStorage implements UserProfileStorage {
             throw new DataConversionException(e);
         } catch (IllegalValueException e) {
             logger.warning("Illegal parameters");
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -1228,11 +1238,11 @@ public class XmlUserProfileStorage implements UserProfileStorage {
     }
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
-        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
+    public static final String GOOGLE_SEARCH_CAPTCHA_PREFIX = "https://ipv4.google.com/sorry/index?continue=";
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
         setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
 ```
@@ -1249,7 +1259,7 @@ public class XmlUserProfileStorage implements UserProfileStorage {
     }
 
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     //Update the filteredPersonList when addressBook is changed, mainly for sort
     @Subscribe
@@ -1258,7 +1268,7 @@ public class XmlUserProfileStorage implements UserProfileStorage {
         personListPanel.setConnections(logic.getFilteredPersonList());
     }
 ```
-###### /java/seedu/address/ui/UserProfileWindow.java
+###### \java\seedu\address\ui\UserProfileWindow.java
 ``` java
 /**
  * Controller for the User Profile Window
@@ -1370,12 +1380,16 @@ public class UserProfileWindow extends UiPart<Region> {
         }
 
         try {
-            String[] emails = emailTextField.getText().split(", ");
-            ArrayList<Email> emailList = new ArrayList<>();
-            for (String curr : emails) {
-                emailList.add(new Email(curr));
+            if (emailTextField.getText().equals("")) {
+                userPerson.setEmail(new ArrayList<>());
+            } else {
+                String[] emails = emailTextField.getText().split(", ");
+                ArrayList<Email> emailList = new ArrayList<>();
+                for (String curr : emails) {
+                    emailList.add(new Email(curr));
+                }
+                userPerson.setEmail(emailList);
             }
-            userPerson.setEmail(emailList);
 
         } catch (IllegalValueException e) {
             statusLabel.setText(MESSAGE_EMAIL_CONSTRAINTS);
@@ -1394,7 +1408,7 @@ public class UserProfileWindow extends UiPart<Region> {
         }
 
         try {
-            if (phoneTextField.getText().equals("")) {
+            if (addressTextField.getText().equals("")) {
                 userPerson.setAddress(new Address(null));
             } else {
                 userPerson.setAddress(new Address(addressTextField.getText()));
@@ -1405,16 +1419,21 @@ public class UserProfileWindow extends UiPart<Region> {
         }
 
         try {
-            String[] webLinks = webLinkTextField.getText().split(", ");
+            if (webLinkTextField.getText().equals("")) {
+                Set<WebLink> webLinkSet = new HashSet<>();
+                userPerson.setWebLinks(webLinkSet);
+            } else {
+                String[] webLinks = webLinkTextField.getText().split(", ");
 
-            Comparator<WebLink> comparator = Comparator.comparing(WebLink::toStringWebLink);
+                Comparator<WebLink> comparator = Comparator.comparing(WebLink::toStringWebLink);
 
-            Set<WebLink> webLinkSet = new TreeSet<WebLink>(comparator);
+                Set<WebLink> webLinkSet = new TreeSet<WebLink>(comparator);
 
-            for (String curr : webLinks) {
-                webLinkSet.add(new WebLink(curr));
+                for (String curr : webLinks) {
+                    webLinkSet.add(new WebLink(curr));
+                }
+                userPerson.setWebLinks(webLinkSet);
             }
-            userPerson.setWebLinks(webLinkSet);
         } catch (IllegalValueException e) {
             statusLabel.setText("Please input a valid webLink");
             throw new Exception();
@@ -1425,7 +1444,7 @@ public class UserProfileWindow extends UiPart<Region> {
     }
 }
 ```
-###### /resources/view/UserProfileWindow.fxml
+###### \resources\view\UserProfileWindow.fxml
 ``` fxml
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -1439,7 +1458,7 @@ public class UserProfileWindow extends UiPart<Region> {
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" fillHeight="false" prefHeight="35.0" prefWidth="200.0" VBox.vgrow="NEVER">
          <children>
