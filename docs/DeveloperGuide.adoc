@@ -903,8 +903,8 @@ Contact List
 A list that displays contacts that were added to it, a contact can exist on multiple lists
 ....
 
-[[default-contact]]
-Default Contact
+[[user-person]]
+User Person
 
 ....
 A contact that is persistent to you. A self-contact such that you can see how you look like in the addressbook of others
