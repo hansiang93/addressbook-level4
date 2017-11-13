@@ -374,7 +374,7 @@ Contact must be selected before selecting the buttons.
 === Viewing Social Media Links : `web`
 
 Changes the internal browser to the maps view of the address of a selected contact.
-Format `web facebook||instagram||linkedin||personal`
+Format `web facebook||instagram||twitter||personal`
 
 [NOTE]
 ====
