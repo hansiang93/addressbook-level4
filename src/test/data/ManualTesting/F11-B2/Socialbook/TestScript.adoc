@@ -1,0 +1,372 @@
+= SocialBook V1.5 Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/main
+
+By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
+
+== Test Script ==
+
+*Getting started* +
+
+Hi tester,  welcome to Social Book App:) As you have noticed, there will be some default data already populated in the
+Social Book when you launch the app. Do familiarize yourself with the UI. The PersonListPanel is on the left, the
+DetailedPersonCard is at the top of the screen, with the Web Browser below that, followed by the Result Display. The
+Command Box is at the bottom, and this is where you will enter your CLI Commands.
+
+We have prepared sample test data along with this test script to aid you in manual testing. You can find the relevant
+test data named SampleData.xml in the same folder that you found this TestScript.adoc file. If the data folder does not exist,
+launch the addressbook first, then close it. The data folder will now be generated. Delete the “addressbook.xml”
+file in your data folder, then put a copy of this “SampleData.xml” file in the data folder and rename it to “addresbook.xml”.
+You are now ready to begin testing.
+
+== ChangeTheme Command ==
+
+*Command box Input:* `changeToTheme 1` +
+*Expected outcome:* Nothing change as the default theme is set to theme 1. +
+*Result Displayed:* Selected Theme: 1 +
+
+*Command box input:* `changeToTheme 2` +
+*Expected outcome:* Theme of the addressbook should change to theme 2. Contacts have a yellow background, main window has
+a grey background. +
+*Result Displayed:* Selected Theme: 2 +
+
+*Command box input:* `changeToTheme 3` +
+*Expected outcome:* Theme of the addressbook should change to theme 3. Contacts have an orange/pink background, main window
+has a white background. +
+*Result Displayed:* Selected Theme: 3 +
+
+*Command box Input:* `changeToTheme 4` +
+*Expected outcome:* Theme of the addressbook should change to theme 4. Contacts have an blue/beige background, main window
+ has a cyan background. +
+*Result Displayed:* Selected Theme: 4 +
+
+*Command box Input:* `ct 2` +
+*Expected outcome:* Theme changed to 2 again.
+*Result Displayed:* Selected Theme: 2
+
+*Command box Input:* `ct 3` +
+*Expected outcome:* Theme changed to 3 again. +
+*Result Displayed:* Selected Theme: 3
+
+*Command box Input:* `ct 4` +
+*Expected outcome:* Theme changed to 4 again. +
+*Result Displayed:* Selected Theme: 4 +
+
+*Command box Input:* `ct 1` +
+*Expected outcome:* Revert back to the original default theme. Contacts have a grey background, main window has a grey
+background. +
+*Result Displayed:* Selected Theme: 1 +
+
+*Command box input:* `changeToTheme 0` or any negative number +
+*Expected outcome:* No UI changes observed +
+*Results Displayed:* Invalid command format! +
+changeToTheme: Change theme by the index number of the 4 inbuilt themes. +
+Parameters: INDEX (1, 2, 3 or 4) +
+Example: changeToTheme 1 +
+
+*Command box input:* `changeToTheme 5` or any positive number greater than 5 +
+*Expected outcome:* No UI changes observed. +
+*Results Displayed:* Only theme 1 to 4 are available currently +
+
+== Adding and removing users ==
+
+#For additions and deletions to the addressbook, refer to the PersonListPanel when changes are made.#
+
+*CommandBox Input:* `delete 1` +
+*Expected outcome:* Aaron Chow will be deleted. First person should now be Adam Khoo. There are now 31 contacts in the addressbook. +
+*Result Displayed:* Deleted Person: Aaron Chow Phone: 80000001 Email: [aaronchow@gmail.com] Address: 123 Clementi
+Avenue #01-01 Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `undo` +
+*Expected outcome:* Delete is undone. First person should be Aaron Chow again. There are now 32 contacts in the addressbook. +
+*Result Displayed:* Undo success!
+
+*CommandBox input:* `add n/randomName p/2323dffs` +
+*Expected outcome:* Add command fails due to Phone field restrictions. +
+*Result Displayed:* Phone number field can only contain numbers and must be at least 3 digits long. +
+
+*CommandBox input:* `add n/randomName1 e/sdffdsf%gfmail.com` +
+*Expected outcome:* Add command fails due to Email field restrictions. +
+*Result Displayed:* Person emails should be 2 alphanumeric/period strings separated by '@' +
+
+*CommandBox input:* `add n/randomName2 w/www.facebook` +
+*Expected outcome:* Add command fails due to Weblink field restrictions. +
+*Result Displayed:* Please enter a valid weblink starting with http or https. +
+
+*CommandBox input:* `add n/randomName w/http://facebook.com/random w/https://facebook.com/random2` +
+*Expected outcome:* Add command fails due to weblink field restrictions. +
+*Result Displayed:* Only one link per category: facebook, instagram or twitter. +
+
+*CommandBox input:* `add n/samantha p/90342423 e/smanathamuackz@gmail.com a/NUS kent ridge w/https://www.instagram.com/societyofsnobs/ t/friend` +
+*Expected outcome:* Samantha is added to addressbook in the last entry. There are now 33 contacts in the addressbook. +
+*Result Displayed:* New person added: samantha Phone: 90342423 Email: [smanathamuackz@gmail.com] Address: NUS kent ridge
+Remark:  Tags: [friend] WebLinks: [https://www.instagram.com/societyofsnobs/]
+
+*CommandBox Input:* `add n/samantha p/90342423 e/smanathamuackz@gmail.com a/NUS kent ridge` +
+*Expected outcome:* Add command fails as it is a duplicate person. Two contacts are considered duplicates if their names,
+phone, email and addresses match. +
+*Result Displayed:* This person already exists in the address book. +
+
+*CommandBox Input:* `add n/Xiang Ting e/random@gmail.com w/https://www.instagram.com/xiangtingk/` +
+*Expected outcome:* Xiang Ting is added to addressbook. Address and phone fields are optional. +
+*Result Displayed:* New person added: Xiang Ting Phone: - Email: [random@gmail.com] Address: - Remark:  Tags:
+WebLinks: [https://www.instagram.com/xiangtingk/] +
+
+*CommandBox Input:* `tagDelete friend` +
+*Expected result:* The ‘friend’ tag is deleted from all persons in the addressbook. ‘friend’ tag is removed from Aurelia,
+Elaine Jasmine, Jamie Pang, Jia En, Michelle, Nicolle Groves, Pei Shi, Sonia Chew, XinLin and samantha. +
+*Result Displayed:* Deleted tag: [friend]
+
+*CommandBox Input:* `undo` +
+*Expected result:* tagDelete command is undone. The ‘friend’ tag is re-added to the 10 contacts above. +
+*Result Diaplyed:* Undo success! +
+
+== Edit Command ==
+#For the edit command, refer to the DetailedPersonCard at the top of the screen when changes are made.#
+
+*CommandBox Input:* `edit 1 n/Andrew` +
+*Expected result:* First Person in the list, Aaron Chow, will have their name changed to Andrew. +
+*Result Displayed:* Edited Person: Andrew Phone: 80000001 Email: [aaronchow@gmail.com] Address: 123 Clementi Avenue #01-01
+Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 1 p/81180987` +
+*Expected result:* First person in the list, Andrew, will have their phone number changed from 80000001 to 81180987 +
+*Result Displayed:* Edited Person: Andrew Phone: 81180987 Email: [aaronchow@gmail.com] Address: 123 Clementi Avenue #01-01
+Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 1 p/dasdfsdfds` +
+*Expected results:* Edit command fails due to Phone field restrictions. +
+*Result Displayed:* Phone numbers can only contain numbers, and should be at least 3 digits long. +
+
+*CommandBox Input:* `edit 1 e/andrew.com` +
+*Expected result:* Edit command fails due to Email field restrictions. +
+*Displayed Result:* Person emails should be 2 alphanumeric/period strings separated by '@' +
+
+*CommandBox Input:* `edit 1 e/` +
+*Expected result:* Andrew’s emails are now empty, signified by a ‘[]’ in the DetailedPersonCard. The Email icon in the
+PersonListPanel for Andrew will also be greyed out. +
+*Edited Person:* Andrew Phone: 81180987 Email: [] Address: 123 Clementi Avenue #01-01 Remark:  Tags:
+WebLinks: [https://www.facebook.com/aaronchow]
+
+*CommandBox Input:* `edit 1 e/edited@email.com e/edited2@gmail.com` +
+*Expected result:* Andrew will have all existing email address replaced by edited@email.com and edited2@gmail.com. The
+email icon will be highlighted once again. +
+*Result Displayed:* Edited Person: Andrew Phone: 81180987 Email: [edited@email.com, edited2@gmail.com] Address:
+123 Clementi Avenue #01-01 Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow]
+
+*CommandBox Input:* `edit 1 e/andrew@hotmail.com e/andrew@hotmail.com` +
+*Expected result:* All of Andrew’s emails are replaced. Andrew’s email list as shown in the DetailedPersonCard should
+only contain andrew@hotmail.com, since the entries entered are duplicates. +
+*Result Displayed:* Edited Person: Andrew Phone: 81180987 Email: [andrew@hotmail.com] Address: 123 Clementi Avenue #01-01
+Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 1 a/Blk 71, Ayer Rajar Crescent` +
+*Expected result:* Andrew’s address as shown in the DetailedPersonCard will be changed to Blk 71, Ayer Rajar Crescent +
+*Result Displayed:* Edited Person: Andrew Phone: 81180987 Email: [andrew@hotmail.com] Address: Blk 71, Ayer Rajar Crescent
+Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 1 w/https://www.twitter.com/andrew` +
+*Expected result:* All of Andrew’s existing weblinks, as shown in the DetailedPersonCard, will be removed and only the
+twitter account above will be added. The “facebook” button in the DetailedPersonCard at the top right is now replaced
+with a “twitter” button. +
+*Result Displayed:* Edited Person: Andrew Phone: 81180987 Email: [andrew@hotmail.com] Address: Blk 71, Ayer Rajar Crescent
+Remark:  Tags:  WebLinks: [https://www.twitter.com/andrew] +
+
+*CommandBox Input:* `edit 1 w/aaron.blogspot.com` +
+*Expected result:* Edit command fails due to weblink restrictions +
+*Result Displayed:* Please enter a valid weblink starting with http or https. +
+
+*CommandBox Input:* `edit 1 p/` +
+*Expected result:* Andrew’s phone field is now empty, signified by a ‘-’ in the DetailedPersonCard. The Phone icon in the
+PersonListPanel for Andrew will also be greyed out. +
+*Result Displayed:*  Edited Person: Andrew Phone: - Email: [andrew@hotmail.com] Address: Blk 71, Ayer Rajar Crescent
+Remark:  Tags:  WebLinks: [https://www.twitter.com/andrew]
+
+*CommandBox Input:* `edit 1 a/` +
+*Expected result:* Andrew’s address field is now empty, signified by a ‘-’ in the DetailedPersonCard. The Home icon in the
+PersonListPanel for Andrew will also be greyed out. +
+*Result Displayed:*  Edited Person: Andrew Phone: - Email: [andrew@hotmail.com] Address: - Remark:  Tags:  WebLinks:
+[https://www.twitter.com/andrew] + 
+
+*CommandBox Input:* `edit 1 w/` +
+*Expected result:* Andrew’s weblink field is now empty, signified by the removal of the twitter link in the DetailedPersonCard.
+The Twitter icon in the PersonListPanel for Andrew and the ‘twitter’ button in the DetailedPersonCard will be removed. +
+*Result Displayed:*  Edited Person: Andrew Phone: - Email: [andrew@hotmail.com] Address: - Remark:  Tags:  WebLinks: +
+
+*CommandBox Input:* `edit 1 n/Aaron Chow p/81189876 e/aaronchow@gmail.com a/123 Clementi Avenue #01-01 w/https://www.facebook.com/aaronchow` +
+*Expected result:* All the contact details of Andrew, including his name, will be replaced by the above information.
+The “twitter” button is replaced with the “facebook” button. +
+*Result Displayed:* Edited Person: Aaron Chow Phone: 81189876 Email: [aaronchow@gmail.com] Address: 123 Clementi
+Avenue #01-01 Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 2 n/Aaron Chow p/81189876 e/aaronchow@gmail.com a/123 Clementi Avenue #01-01 w/https://www.facebook.com/aaronchow` +
+*Expected result:* Edit command fails as it will cause a duplicate person. +
+*Result Displayed:* This person already exists in the address book. +
+
+== Edit tags ==
+
+*CommandBox Input:* `edit 1 t/` +
+*Expected result:* Edit command failed due to Tag field restrictions. Edited tags field cannot be empty. +
+*Result Displayed:* Invalid command format! +
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values. +
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [+t/TAG]...[-t/TAG]...clearTag
+[w/WEB LINK]... +
+Example: edit 1 p/91234567 e/johndoe@example.com t/owesMoney w/https://www.facebook.com/jiasheng.an clearTag
+
+*CommandBox Input:* `edit 1 +t/happy +t/super +t/hero +t/villain`
+*Expected result:* 4 tags, once of each above, will be added onto the existing list of tags owned by Aaron Chow.
+They will be displayed in the PersonListPanel and DetailedPersonCard. +
+*Result Displayed:* Edited Person: Aaron Chow Phone: 81189876 Email: [aaronchow@gmail.com] Address: 123 Clementi
+Avenue #01-01 Remark:  Tags: [super][villain][happy][hero] WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 1 -t/happy` +
+*Expected result:* The `happy` tag will be removed from the existing list of tags owned by Aaron Chow in the list.
+Other tags will not be affected. +
+*Result Displayed:* Edited Person: Aaron Chow Phone: 81189876 Email: [aaronchow@gmail.com] Address: 123 Clementi
+Avenue #01-01 Remark:  Tags: [super][villain][hero] WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 1 +t/king +t/boss -t/villain` +
+*Expected result:* The ‘king’ and ‘boss’ tags are added to Aaron while the ‘villain’ tag is removed. Aaron now has 4 tags
+‘super’, ‘boss’, ‘king’, ‘hero’. +
+*Result Displayed:* Edited Person: Aaron Chow Phone: 81189876 Email: [aaronchow@gmail.com] Address: 123 Clementi
+Avenue #01-01 Remark:  Tags: [super][boss][king][hero] WebLinks: [https://www.facebook.com/aaronchow] +
+
+*CommandBox Input:* `edit 1 +t/solo clearTag` +
+*Expected result:* All the tags belonging to Aaron Chow in the list will be cleared first, before the ‘solo’ tag is added. +
+*Displayed Result:* Edited Person: Aaron Chow Phone: 81189876 Email: [aaronchow@gmail.com] Address: 123 Clementi
+Avenue #01-01 Remark:  Tags: [solo] WebLinks: [https://www.facebook.com/aaronchow]
+
+*CommandBox Input:* `edit 1 clearTag` +
+*Expected result:* Clears all tags belonging to Aaron. +
+*Displayed Result:* Edited Person: Aaron Chow Phone: 81189876 Email: [aaronchow@gmail.com] Address: 123 Clementi
+Avenue #01-01 Remark:  Tags:  WebLinks: [https://www.facebook.com/aaronchow] +
+
+== Web Command Usage ==
+
+#Status Check: If you have followed the test script, you should have 34 persons in the addressbook
+ at this point, with First entry Aaron Chow and Last entry Xiang Ting.# +
+
+*CommandBox Input:* `select 34` +
+*Expected result:* The last person in the address book, Xiang Ting, is selected in the PersonListPanel. +
+*Result Displayed:* Selected Person: 34 +
+
+*CommandBox Input:* `web instagram` +
+*Expected result:* Xiang Ting’s instagram page is loaded in the Web browser. +
+*Result Displayed:* WebLink loading... +
+
+*CommandBox Input:* `web facebook` +
+*Expected result:* Nothing will happen as Xiang Ting does not have a facebook link. +
+*Result Displayed:* WebLink loading... +
+
+*CommandBox Input:* `web search` +
+*Expected result:* Xiang Ting’s name will be searched on google in the Web browser. +
+*Result Displayed:* WebLink loading...
+
+== Sort ,find & filter Command ==
+
+*CommandBox Input:* `sort name` or `sort n` +
+*Expected Result:* The entire list of 34 persons will be sorted by name in ascending alphabetical order, first entry
+Aaron Chow, last entry Xinlin. +
+*Result Displayed:* Sorted successfully by name. +
+
+*CommandBox Input:* `sort email` or `sort e` +
+*Expected Result:* The entire list will be sorted by email in ascending alphabetical order, first entry Denise Soong,
+last entry XinLin.  Nil entries will be displayed first. For persons with multiple emails, their primary email (their first email)
+will be displayed first. +
+*Result Displayed:* Sorted successfully by email. +
+
+*CommandBox Input:* `sort address` or `sort a` +
+*Expected Result:*  The entire list will be sorted by addresses in ascending alphabetical order, first entry Shadow,
+last entry Gigi Hadid. Nil entries will be displayed first. +
+*Result Displayed:* Sorted successfully by address
+
+*CommandBox Input:* `sort phone` or `sort p` +
+*Expected Result:*  The entire list will be sorted by phone number in ascending alphabetical order, first entry Denise Soong, last entry XinLin. Nil entries will be displayed first.
+*Result Displayed:* Sorted successfully by phone.
+
+*CommandBox Input:* `find USA NOC` +
+*Expected result:* A list of people that have fields matching either “USA” or “NOC” will be displayed. 4 entries will be displayed: Aurelia, Michelle, Alexis Ren, Gigi Hadid
+*Result Displayed:* 4 persons listed! +
+
+*CommandBox Input:* `sort email` +
+Expected result: The current displayed list of 4 people displayed will be sorted by emails in ascending alphbetical order.
+4 entries will be displayed: Alexis Ren, Gigi Hadid, Michelle, Aurelia +
+*Result Displayed:* Sorted successfully by email. +
+
+*CommandBox Input:* `filter singapore friend` +
+*Expected result:* A list of people that have fields matching “singapore” AND “friend” (case insensitive) will be displayed.
+2 entries will be displayed: Elaine Jasmine, Jia En +
+*Result Displayed:* 2 persons listed!
+
+*Command Box:* `list` +
+*Expected result:* The full list of contacts will be displayed in the PersonListPanel again, according to the last
+sorted order, in this case email. First entry Denise Soong, last entry XinLin. +
+*Result Displayed:* Listed all persons
+
+== User Profile ==
+
+#As a user, you have your own contact in SocialBook.#
+
+*Input:* Press `F2` on your keyboard, or click “`File`” → “`User Profile`”. +
+*Expected result:* A new panel will appear which allows you to store your own personal data.
+The name field will be highlighted by default. All other fields will have default values. +
+
+*Input:* "`Daniel Craig`", followed by `Enter` on your keyboard, or clicking the `OK` button. +
+*Expected result:* The enter key clicks the OK button, saving your new User Profile. +
+
+*Input:* Press `F2` on your keyboard, or click “`File`” → “`User Profile`”. +
+*Expected result:* The User Profile displays your updated User Profile details, with the name field “Daniel Craig” and all other fields having default values. The name field is still highlighted.
+
+*Input:* "`Craig Ferguson`", followed by `Escape` on your keyboard, or clicking the `Cancel` button. +
+*Expected result:* The escape key clicks the cancel button, cancelling all changes and closing the window.
+Any changes you made are not saved.
+
+*Input:* Press `F2` on your keyboard, or click “`File`” → “`User Profile`”. +
+*Expected result:* The User Profile still displays “Daniel Craig” as name with all other fields being default
+values. +
+
+*Input:* “`!@#$`”, followed by `Enter` on your keyboard. +
+*Expected result:* A label at the bottom indicates an invalid name cannot be saved.
+
+*Input:* Replace the name field with “Alan”, followed by `Tab` on your keyboard to highlight the email field, then “Ben”,
+followed by `Enter` on your keyboard. +
+*Expected result:* The label at the bottom indicates an invalid email cannot be saved.
+
+*Input:* Replace the email field with “alan@hotmail.com”, followed by `Tab` on your keyboard to highlight the phone field,
+then “`abc`”, followed by `Enter` on your keyboard. +
+*Expected result:* The label at the bottom indicates an invalid phone number cannot be saved.
+
+*Input:* Replace the phone field with “98765432”, followed by `Tab` on your keyboard to highlight the address field,
+delete the address field so that it is now blank. Hit `Tab` on your keyboard again to highlight the weblink field,
+delete the weblink so that it is now blank. Press `Enter` on your keyboard. +
+*Expected result:* The User Profile Window closes. As address and weblinks are optional values, blank values are
+valid values. +
+If you bring up the User Profile Window again, you should see Name “Alan”,
+Email “alan@hotmail.com”, Phone “98765432”, Address and WebLinks blank.
+Hit cancel to close the window without saving.
+
+== Update Command ==
+#Status Check: If you followed the User Profile portion above, you should have a non-default User Profile at this point.
+The user profile updating can also be done using the update command.#
+
+*Command Box Input:* `update n/Tom Cruise w/https://www.facebook.com/TomCruise` +
+*Expected outcome:* Your User Profile will be updated accordingly, with name changed from “Alan” to “Tom Cruise” and weblinks.
+You can check this by opening up the User Profile Window again (press `F2`). +
+*Result Displayed:* Successfully edited User Profile: Tom Cruise Phone: 98765432 Email: [alan@hotmail.com] Address: -
+Remark:  Tags:  WebLinks: [https://www.facebook.com/TomCruise]
+
+== Share Command ==
+*Command box input:* `share` +
+*Expected outcome:* An add command for the User Profile contact will be generated. It is automatically copied to your clipboard. +
+*Result Displayed:* add n/Tom Cruise p/98765432 e/alan@hotmail.com w/https://www.facebook.com/TomCruise
+
