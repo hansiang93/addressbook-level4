@@ -792,9 +792,8 @@ public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ----
-There are 6 boolean methods to check whether any of the given keywords is contained in each of a `Person`'s attributed, using Java Stream API anyMatch.
-The test method will return true for the ReadOnlyperson if either of these methods return true, indicating that at least one keyword matches with one of
-the 6 attributes.
+There are 6 boolean methods to check whether any of the given keywords is contained in each of a Person's attributed, using Java Stream API anyMatch.
+The test method will return true for the ReadOnlyperson if either of these methods return true, indicating that at least one keyword matches with one of the 6 attributes.
 
 ==== Filter Command
 `Filter` command displays the a list of person in the address book with attributes that matches `all` of the keywords entered by the user,
