@@ -15,7 +15,7 @@ public class UserPrefs {
     private String addressBookName = "MySocialBook";
 
     public UserPrefs() {
-        this.setGuiSettings(1400, 800, 100, 50);
+        this.setGuiSettings(1400, 800, 10, 10);
     }
 
     public GuiSettings getGuiSettings() {
