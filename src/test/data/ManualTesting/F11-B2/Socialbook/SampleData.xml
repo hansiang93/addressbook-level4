@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Aaron Chow</name>
+        <phone>80000001</phone>
+        <emailList>
+            <value>aaronchow@gmail.com</value>
+        </emailList>
+        <address>123 Clementi Avenue #01-01</address>
+        <remark></remark>
+        <webLink>https://www.facebook.com/aaronchow</webLink>
+    </persons>
+    <persons>
+        <name>Adam Khoo</name>
+        <phone>80000002</phone>
+        <emailList>
+            <value>khooadam@gmail.com</value>
+        </emailList>
+        <emailList>
+            <value>khooadam@yahoo.com.sg</value>
+        </emailList>
+        <address>123 Clementi Avenue #01-02</address>
+        <remark></remark>
+        <webLink>https://www.facebook.com/adamkhoo</webLink>
+    </persons>
+    <persons>
+        <name>Alexis Ren</name>
+        <phone>86786786</phone>
+        <emailList>
+            <value>alexisren@models.com</value>
+        </emailList>
+        <address>USA</address>
+        <remark></remark>
+        <tagged>USA</tagged>
+        <tagged>model</tagged>
+        <tagged>nochancelah</tagged>
+        <webLink>https://twitter.com/AlexisRenG</webLink>
+        <webLink>https://www.instagram.com/alexisren</webLink>
+    </persons>
+    <persons>
+        <name>Annette Lee</name>
+        <phone>98934395</phone>
+        <emailList>
+            <value>sueann@gmail.com</value>
+        </emailList>
+        <address>singapore ntu</address>
+        <remark></remark>
+        <webLink>https://www.instagram.com/annetterochellelee/</webLink>
+        <webLink>https://www.facebook.com/sgag.sg/</webLink>
+    </persons>
+    <persons>
+        <name>Aurelia</name>
+        <phone>-</phone>
+        <emailList>
+            <value>nocaurelia@noc.com</value>
+        </emailList>
+        <address>-</address>
+        <remark></remark>
+        <tagged>Phoneless</tagged>
+        <tagged>NOC</tagged>
+        <tagged>hobo</tagged>
+        <tagged>chio</tagged>
+        <tagged>friend</tagged>
+        <tagged>model</tagged>
+        <webLink>https://www.instagram.com/aureliahathaway/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Betty Choo</name>
+        <phone>80000003</phone>
+        <emailList>
+            <value>betty@nus.edu.sg</value>
+        </emailList>
+        <emailList>
+            <value>betty@gmail.com</value>
+        </emailList>
+        <address>111 Clementi Avenue #01-01</address>
+        <remark></remark>
+        <webLink>https://www.instagram.com/bettychoo</webLink>
+    </persons>
+    <persons>
+        <name>Clarice Ang</name>
+        <phone>-</phone>
+        <emailList>
+            <value>clariceang@hotmail.com</value>
+        </emailList>
+        <emailList>
+            <value>clarice@a.com</value>
+        </emailList>
+        <address>111 Clementi Avenue #04-01</address>
+        <remark></remark>
+        <tagged>phoneless</tagged>
+        <webLink>https://www.facebook.com/clariceeee</webLink>
+        <webLink>https://www.twitter.com/clariceeee</webLink>
+        <webLink>https://www.instagram.com/clariceeee</webLink>
+    </persons>
+    <persons>
+        <name>danielle</name>
+        <phone>83324335</phone>
+        <emailList>
+            <value>danielle@b.com</value>
+        </emailList>
+        <address>NTU Pioneer Hall</address>
+        <remark></remark>
+        <webLink>https://www.instagram.com/daniellealexx/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Denise Soong</name>
+        <phone>-</phone>
+        <emailList>
+            <value></value>
+        </emailList>
+        <address>Tanah Merah</address>
+        <remark></remark>
+        <tagged>phoneless</tagged>
+        <tagged>noemail</tagged>
+        <tagged>Korean</tagged>
+        <webLink>https://www.instagram.com/denisesoongeelyn/</webLink>
+    </persons>
+    <persons>
+        <name>Eden Ang</name>
+        <phone>88889999</phone>
+        <emailList>
+            <value>edensohandsome@eden.com</value>
+        </emailList>
+        <address>Garden of Eden</address>
+        <remark></remark>
+        <webLink>https://www.twitter.com/edenang</webLink>
+        <webLink>https://www.facebook.com/edenang</webLink>
+        <webLink>https://www.instagram.com/theoneandonlyeden</webLink>
+    </persons>
+    <persons>
+        <name>Elaine Jasmine</name>
+        <phone>-</phone>
+        <emailList>
+            <value>elaine@gmail.com</value>
+        </emailList>
+        <address>Singapore SMU</address>
+        <remark></remark>
+        <tagged>phoneless</tagged>
+        <tagged>friend</tagged>
+        <tagged>wishWasGirlfriend</tagged>
+        <webLink>https://www.instagram.com/xelainejasmine/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Elon Musk</name>
+        <phone>-</phone>
+        <emailList>
+            <value>elonmusk@tesla.org</value>
+        </emailList>
+        <address>3500 Deer Creek Road Palo Alto, CA 94304</address>
+        <remark></remark>
+        <tagged>phoneless</tagged>
+        <tagged>entrepreneur</tagged>
+        <webLink>https://www.facebook.com/ermusk</webLink>
+        <webLink>https://www.twitter.com/elonmusk</webLink>
+    </persons>
+    <persons>
+        <name>Gal Gadot</name>
+        <phone>-</phone>
+        <emailList>
+            <value>ineednoemail@gmail.com</value>
+        </emailList>
+        <address>Justice League Tower</address>
+        <remark></remark>
+        <tagged>Model</tagged>
+        <tagged>CallWhenInTrouble</tagged>
+        <tagged>WonderWoman</tagged>
+        <webLink>https://twitter.com/GalGadot</webLink>
+        <webLink>https://www.facebook.com/GalGadot/</webLink>
+    </persons>
+    <persons>
+        <name>Gigi Hadid</name>
+        <phone>90128368</phone>
+        <emailList>
+            <value>gigigigigigigi@gg.com</value>
+        </emailList>
+        <address>USA</address>
+        <remark></remark>
+        <tagged>USA</tagged>
+        <tagged>classmate</tagged>
+        <webLink>https://www.instagram.com/gigihadid/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Grayce Tan</name>
+        <phone>98080808</phone>
+        <emailList>
+            <value>graycetan@u.nus.edu.sg</value>
+        </emailList>
+        <emailList>
+            <value>graycetan777@hotmail.com</value>
+        </emailList>
+        <address>NUS</address>
+        <remark></remark>
+        <webLink>https://www.instagram.com/graycetan/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Hui Yi</name>
+        <phone>94352316</phone>
+        <emailList>
+            <value>huiyi@gmail.com</value>
+        </emailList>
+        <address>Singapore NUS</address>
+        <remark></remark>
+        <webLink>https://www.facebook.com/huiyi</webLink>
+        <webLink>https://www.instagram.com/huiyoooooo</webLink>
+        <webLink>https://www.twitter.com/huiyi</webLink>
+    </persons>
+    <persons>
+        <name>Jade Rasif</name>
+        <phone>-</phone>
+        <emailList>
+            <value>jade@jade.com</value>
+        </emailList>
+        <address>F-CLub</address>
+        <remark></remark>
+        <tagged>phoneless</tagged>
+        <webLink>https://www.instagram.com/djjaderasif/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Jamie Pang</name>
+        <phone>95254235</phone>
+        <emailList>
+            <value>jamiepangsochio@gmail.com</value>
+        </emailList>
+        <address>-</address>
+        <remark></remark>
+        <tagged>hobo</tagged>
+        <tagged>friend</tagged>
+        <webLink>https://www.facebook.com/jamie.pang.355</webLink>
+    </persons>
+    <persons>
+        <name>Janice tan</name>
+        <phone>86549013</phone>
+        <emailList>
+            <value>janice@gmail.com</value>
+        </emailList>
+        <address>-</address>
+        <remark></remark>
+        <tagged>hobo</tagged>
+        <tagged>christian</tagged>
+        <webLink>https://www.instagram.com/bunnyjanjan/</webLink>
+        <webLink>https://www.twitter.com/bunnyjanjan/</webLink>
+    </persons>
+    <persons>
+        <name>Jia En</name>
+        <phone>94747473</phone>
+        <emailList>
+            <value>misssingapore2017@toohotforyou.com</value>
+        </emailList>
+        <address>Singapore</address>
+        <remark></remark>
+        <tagged>chio</tagged>
+        <tagged>friend</tagged>
+        <webLink>https://www.instagram.com/ennnnnz/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Jolene Teo</name>
+        <phone>429394729374</phone>
+        <emailList>
+            <value>topazjolene@hotmail.com</value>
+        </emailList>
+        <address>Bukit Timah, Singapore</address>
+        <remark></remark>
+        <webLink>https://www.instagram.com/j.oleneteo/</webLink>
+        <webLink>https://www.facebook.com/jolenetyt</webLink>
+    </persons>
+    <persons>
+        <name>Marianne Tan</name>
+        <phone>99999999</phone>
+        <emailList>
+            <value>marianne@gmail.com</value>
+        </emailList>
+        <address>Malaysia</address>
+        <remark></remark>
+        <tagged>colleague</tagged>
+        <tagged>married</tagged>
+        <webLink>https://www.instagram.com/mariannetpy/</webLink>
+    </persons>
+    <persons>
+        <name>Michelle</name>
+        <phone>80186396</phone>
+        <emailList>
+            <value>Michelle@noc.com.sg</value>
+        </emailList>
+        <address>singapore NOC HQ</address>
+        <remark></remark>
+        <tagged>republicPoly</tagged>
+        <tagged>NOC</tagged>
+        <webLink>https://www.instagram.com/mirchelley/</webLink>
+    </persons>
+    <persons>
+        <name>Nicole Low</name>
+        <phone>-</phone>
+        <emailList>
+            <value>nicolelow@zouk.sg</value>
+        </emailList>
+        <address>Singapore Zouk</address>
+        <remark></remark>
+        <tagged>yeahRight</tagged>
+        <tagged>phoneless</tagged>
+        <tagged>classmate</tagged>
+        <webLink>https://www.instagram.com/nicolekittykatx/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>Nicolle Groves</name>
+        <phone>-</phone>
+        <emailList>
+            <value>nicolle@gmail.com</value>
+        </emailList>
+        <address>Phillipines</address>
+        <remark></remark>
+        <tagged>phoneless</tagged>
+        <tagged>student</tagged>
+        <tagged>friend</tagged>
+        <webLink>https://www.instagram.com/nicgroves/</webLink>
+    </persons>
+    <persons>
+        <name>Novita Lam</name>
+        <phone>95652118</phone>
+        <emailList>
+            <value>novita@gmail.com</value>
+        </emailList>
+        <address>NUS Kent Ridge Hall</address>
+        <remark></remark>
+        <tagged>attached</tagged>
+        <webLink>https://www.facebook.com/novitalamm</webLink>
+        <webLink>https://www.instagram.com/novitalam/</webLink>
+    </persons>
+    <persons>
+        <name>Pei Shi</name>
+        <phone>93391576</phone>
+        <emailList>
+            <value>peishiheartz@hotmail.com</value>
+        </emailList>
+        <address>Bukit Batok west Ave 6</address>
+        <remark></remark>
+        <tagged>friend</tagged>
+        <webLink>https://www.instagram.com/speishi/</webLink>
+    </persons>
+    <persons>
+        <name>Sonia Chew</name>
+        <phone>81163278</phone>
+        <emailList>
+            <value>soniaDJ@gmail.com</value>
+        </emailList>
+        <address>sengkang</address>
+        <remark></remark>
+        <tagged>DJ</tagged>
+        <tagged>friend</tagged>
+        <webLink>https://www.instagram.com/soniachew/</webLink>
+    </persons>
+    <persons>
+        <name>Winnie The Pooh</name>
+        <phone>-</phone>
+        <emailList>
+            <value>christopherrobin@hundredacrewoods.com</value>
+        </emailList>
+        <address>-</address>
+        <remark></remark>
+        <tagged>Phoneless</tagged>
+        <tagged>hobo</tagged>
+    </persons>
+    <persons>
+        <name>Xenia</name>
+        <phone>81934395</phone>
+        <emailList>
+            <value>xenia@hotmail.com</value>
+        </emailList>
+        <emailList>
+            <value>xenia@gmail.com</value>
+        </emailList>
+        <address>NUS</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <webLink>https://www.instagram.com/hotcheekylace/?hl=en</webLink>
+    </persons>
+    <persons>
+        <name>XinLin</name>
+        <phone>87674747</phone>
+        <emailList>
+            <value>xinlinnumber2@nus.edu.sg</value>
+        </emailList>
+        <address>-</address>
+        <remark></remark>
+        <tagged>hobo</tagged>
+        <tagged>friend</tagged>
+        <webLink>https://www.facebook.com/xinlinnn</webLink>
+    </persons>
+    <persons>
+        <name>Shadow</name>
+        <phone>-</phone>
+        <emailList>
+            <value></value>
+        </emailList>
+        <address>-</address>
+        <remark></remark>
+    </persons>
+    <tags>Phoneless</tags>
+    <tags>student</tags>
+    <tags>DJ</tags>
+    <tags>classmate</tags>
+    <tags>republicPoly</tags>
+    <tags>owesMoney</tags>
+    <tags>Hobo</tags>
+    <tags>christian</tags>
+    <tags>friend</tags>
+    <tags>CallWhenInTrouble</tags>
+    <tags>model</tags>
+    <tags>nochancelah</tags>
+    <tags>USA</tags>
+    <tags>noemail</tags>
+    <tags>NOC</tags>
+    <tags>hobo</tags>
+    <tags>chio</tags>
+    <tags>Korean</tags>
+    <tags>Uncontactable</tags>
+    <tags>colleague</tags>
+    <tags>entrepreneur</tags>
+    <tags>WonderWoman</tags>
+    <tags>wishwasgirlfriend</tags>
+    <tags>yeahRight</tags>
+    <tags>phoneless</tags>
+    <tags>butnophone</tags>
+    <tags>wishWasGirlfriend</tags>
+    <tags>Model</tags>
+    <tags>attached</tags>
+    <tags>married</tags>
+</addressbook>
